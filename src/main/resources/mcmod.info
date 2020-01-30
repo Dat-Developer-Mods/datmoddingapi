@@ -1,0 +1,16 @@
+[
+{
+  "modid": "datmoddingapi",
+  "name": "Dat Modding API",
+  "description": "An API containing useful java stuff for Dem Modders",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Dem Modders"],
+  "credits": "The Forge and FML guys, for making this example, they're pretty cool guys",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
