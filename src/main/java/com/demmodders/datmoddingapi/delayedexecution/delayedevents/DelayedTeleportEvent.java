@@ -7,12 +7,12 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 
 public class DelayedTeleportEvent extends BaseDelayedEvent {
-    static final TextFormatting textCancelledColour = TextFormatting.RED;
-    boolean cancelled = false;
-    Location destination;
-    EntityPlayerMP player;
-    double startX;
-    double startZ;
+    public static final TextFormatting textCancelledColour = TextFormatting.RED;
+    public boolean cancelled = false;
+    public Location destination;
+    public EntityPlayerMP player;
+    public double startX;
+    public double startZ;
 
     public DelayedTeleportEvent(Location Destination, EntityPlayerMP Player, int Delay) {
         super(Delay);
@@ -33,7 +33,7 @@ public class DelayedTeleportEvent extends BaseDelayedEvent {
 
     @Override
     public boolean canExecute(){
-        if (player.isDead || player.hasDisconnected() || Math.pow(player.posX, 2) + Math.pow(player.posZ, 2) > 1){
+        if (player.isDead || player.hasDisconnected() || Math.abs(Math.pow(player.posX - startX, 2) + Math.pow(player.posZ - startZ, 2)) > 1){
             cancelled = true;
             if(!player.hasDisconnected()) player.sendMessage(new TextComponentString(textCancelledColour + "Teleport Cancelled"));
         }
