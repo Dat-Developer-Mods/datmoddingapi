@@ -22,9 +22,9 @@ public class FileHelper {
         if (FMLCommonHandler.instance().getMinecraftServerInstance() != null && FMLCommonHandler.instance().getMinecraftServerInstance().isDedicatedServer())
         {
             dir = new File("./config/", modID);
+        } else {
+            dir = new File(Minecraft.getMinecraft().mcDataDir, modID);
         }
-        dir = new File(Minecraft.getMinecraft().mcDataDir, modID);
-
         if(!dir.exists()){
             boolean success = dir.mkdirs();
             assert success : "Unable to create faction Directory";
