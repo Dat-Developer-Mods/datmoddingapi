@@ -10,9 +10,11 @@ public class Location {
     public float pitch;
     public float yaw;
 
+    // Empty constructor for GSON
     public Location(){
 
     }
+
     public Location(int Dim, double x, double y, double z, float pitch, float yaw){
         this.dim = Dim;
         this.x = x;
@@ -22,6 +24,11 @@ public class Location {
         this.yaw = yaw;
     }
 
+    /**
+     * Converts a given block position to the Location Standard
+     * @param Dim The dimension the block is in
+     * @param Blockpos The BlockPos
+     */
     public Location(int Dim, BlockPos Blockpos){
         this.dim = Dim;
         this.x = Blockpos.getX();

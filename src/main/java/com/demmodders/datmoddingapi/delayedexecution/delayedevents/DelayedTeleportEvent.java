@@ -11,6 +11,8 @@ public class DelayedTeleportEvent extends BaseDelayedEvent {
     public boolean cancelled = false;
     public Location destination;
     public EntityPlayerMP player;
+
+    // The player's Starting coordinates
     public double startX;
     public double startZ;
 
@@ -24,6 +26,7 @@ public class DelayedTeleportEvent extends BaseDelayedEvent {
 
     @Override
     public void execute(){
+        // Handle different dimensions
         if (destination.dim != player.dimension){
             player.changeDimension(destination.dim, new DatTeleporter(destination));
         } else {
@@ -33,6 +36,7 @@ public class DelayedTeleportEvent extends BaseDelayedEvent {
 
     @Override
     public boolean canExecute(){
+        // Ensure the player is still on the server, and hasn't moved more than a block away from their start point
         if (player.isDead || player.hasDisconnected() || Math.abs(Math.pow(player.posX - startX, 2) + Math.pow(player.posZ - startZ, 2)) > 1){
             cancelled = true;
             if(!player.hasDisconnected()) player.sendMessage(new TextComponentString(textCancelledColour + "Teleport Cancelled"));
