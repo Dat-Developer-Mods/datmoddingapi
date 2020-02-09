@@ -2,6 +2,7 @@ package com.demmodders.datmoddingapi.util;
 
 import com.demmodders.datmoddingapi.DatModdingAPI;
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,8 +24,18 @@ public class FileHelper {
         {
             dir = new File("./config/", modID);
         } else {
-            dir = new File(Minecraft.getMinecraft().mcDataDir, modID);
+            dir = new File(Minecraft.getMinecraft().mcDataDir + "/config/", modID);
         }
+        if(!dir.exists()){
+            boolean success = dir.mkdirs();
+            assert success : "Unable to create faction Directory";
+        }
+        return dir;
+    }
+
+    public static File getWorldSubDir(String modID){
+        File dir;
+        dir = new File(DimensionManager.getCurrentSaveRootDirectory(), modID);
         if(!dir.exists()){
             boolean success = dir.mkdirs();
             assert success : "Unable to create faction Directory";

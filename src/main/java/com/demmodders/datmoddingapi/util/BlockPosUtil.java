@@ -9,29 +9,29 @@ public class BlockPosUtil {
         BlockPos test = new BlockPos(blockPos);
         World world = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(Dim);
         if (world.getBlockState(blockPos).getMaterial().blocksMovement()) {
-            test = test.up();
             while (test.getY() < blockPos.getY() + maxDistance){
+                test = test.up();
                 if (!world.getBlockState(test).getMaterial().blocksMovement()){
                     if (!world.getBlockState(test.up()).getMaterial().blocksMovement()){
                         return test;
                     } else {
                         test = test.up();
                     }
-                    test = test.up();
                 }
             }
-        } else if (!world.getBlockState(blockPos.down()).getMaterial().blocksMovement()){
-            test = test.down();
+        } else if (!world.getBlockState(blockPos.down()).getMaterial().blocksMovement() && !world.getBlockState(blockPos.down()).getMaterial().isLiquid()){
             while (test.getY() < blockPos.getY() + maxDistance){
+                test = test.down();
                 if (!world.getBlockState(test).getMaterial().blocksMovement()){
                     if (!world.getBlockState(test.down()).getMaterial().blocksMovement()){
                         return test;
                     } else {
                         test = test.down();
                     }
-                    test = test.down();
                 }
             }
+        } else {
+            return blockPos;
         }
         return null;
     }
