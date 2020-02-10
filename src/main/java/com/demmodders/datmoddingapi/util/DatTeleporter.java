@@ -8,7 +8,7 @@ import net.minecraftforge.common.util.ITeleporter;
 
 public class DatTeleporter implements ITeleporter {
 
-    // The destinatio
+    // The destination
     Location location;
 
     public DatTeleporter(Location Destination){
