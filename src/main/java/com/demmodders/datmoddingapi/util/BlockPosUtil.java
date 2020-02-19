@@ -20,11 +20,13 @@ public class BlockPosUtil {
                 }
             }
         } else if (!world.getBlockState(blockPos.down()).getMaterial().blocksMovement() && !world.getBlockState(blockPos.down()).getMaterial().isLiquid()){
-            while (test.getY() < blockPos.getY() + maxDistance){
+            while (test.getY() > blockPos.getY() - maxDistance){
                 test = test.down();
-                if (!world.getBlockState(test).getMaterial().blocksMovement()){
+                if (test.getY() < 0) {
+                    return null;
+                } else if (!world.getBlockState(test).getMaterial().blocksMovement()){
                     if (!world.getBlockState(test.down()).getMaterial().blocksMovement()){
-                        return test;
+                        return test.up();
                     } else {
                         test = test.down();
                     }
