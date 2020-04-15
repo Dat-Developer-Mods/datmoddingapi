@@ -2,12 +2,11 @@ package com.demmodders.datmoddingapi.delayedexecution.delayedevents;
 
 import com.demmodders.datmoddingapi.structures.Location;
 import com.demmodders.datmoddingapi.util.DatTeleporter;
+import com.demmodders.datmoddingapi.util.DemConstants;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
 
 public class DelayedTeleportEvent extends BaseDelayedEvent {
-    public static final TextFormatting textCancelledColour = TextFormatting.RED;
     public boolean cancelled = false;
     public Location destination;
     public EntityPlayerMP player;
@@ -39,7 +38,7 @@ public class DelayedTeleportEvent extends BaseDelayedEvent {
         // Ensure the player is still on the server, and hasn't moved more than a block away from their start point
         if (player.isDead || player.hasDisconnected() || Math.abs(Math.pow(player.posX - startX, 2) + Math.pow(player.posZ - startZ, 2)) > 1){
             cancelled = true;
-            if(!player.hasDisconnected()) player.sendMessage(new TextComponentString(textCancelledColour + "Teleport Cancelled"));
+            if(!player.hasDisconnected()) player.sendMessage(new TextComponentString(DemConstants.TextColour.ERROR + "Teleport Cancelled"));
         }
         return super.canExecute() && !cancelled;
     }
