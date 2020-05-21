@@ -1,6 +1,6 @@
 package com.demmodders.datmoddingapi.util;
 
-public class Maths {
+public class DatMaths {
     // Clamp
 
     /**
