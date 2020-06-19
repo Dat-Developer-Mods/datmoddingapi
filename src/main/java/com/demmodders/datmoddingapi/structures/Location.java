@@ -50,10 +50,10 @@ public class Location {
     }
 
     /**
-     * Check to see if the given block
-     * @param Dim
-     * @param theBlockPos
-     * @return
+     * Check to see if the given block is safe to spawn on
+     * @param Dim The dimension containing the block
+     * @param theBlockPos The blocks position
+     * @return If the block is safe to spawn on
      */
     public static boolean checkLocationSafety(int Dim, BlockPos theBlockPos){
         World world = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(Dim);
