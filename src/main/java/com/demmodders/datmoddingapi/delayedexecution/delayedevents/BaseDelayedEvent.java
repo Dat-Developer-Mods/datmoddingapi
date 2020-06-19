@@ -7,7 +7,7 @@ public class BaseDelayedEvent implements IDelayedEventInterface {
     /**
      * The time after which the event can be executed
      */
-    private long exeTime;
+    protected long exeTime;
 
     public BaseDelayedEvent(int Delay){
         // Calculate the time after which we can execute, so we don't calculate it every time we check it
