@@ -1,5 +1,6 @@
 package com.demmodders.datmoddingapi;
 
+import com.demmodders.datmoddingapi.Enums.PermissionSystem;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -12,6 +13,10 @@ public class DatModdingAPIConfig {
     @Config.Comment("The number of delayed events that should be executed a tick, less is quicker")
     @Config.RangeInt(min = 1)
     public static int delayedEventsPerTick = 1;
+
+    @Config.Name("Force Permission System")
+    @Config.Comment("Forces Dat mods to use a specific api for permissions")
+    public static PermissionSystem forcedPermissionSystem = PermissionSystem.AUTO;
 
     @Mod.EventBusSubscriber(modid = DatModdingAPI.MODID)
     private static class EventHandler {
