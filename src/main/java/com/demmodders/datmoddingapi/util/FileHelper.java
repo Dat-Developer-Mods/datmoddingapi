@@ -13,22 +13,24 @@ import java.io.IOException;
 public class FileHelper {
     static final Logger LOGGER = LogManager.getLogger(DatModdingAPI.MODID);
 
+    public static File configDir;
+
     /**
      * Safely get the config subdirectory for the given modID
-     * @param modID The ID of the mod who's config subdirectory is being fetched
+     * @param modID The ID of the mod whose config subdirectory is being fetched
      * @return A file open as a directory
      */
     public static File getConfigSubDir(String modID){
         File dir;
         if (FMLCommonHandler.instance().getMinecraftServerInstance() != null && FMLCommonHandler.instance().getMinecraftServerInstance().isDedicatedServer())
         {
-            dir = new File("./config/", modID);
+            dir = new File(configDir, modID);
         } else {
-            dir = new File(Minecraft.getMinecraft().mcDataDir + "/config/", modID);
+            dir = new File(configDir, modID);
         }
         if(!dir.exists()){
             boolean success = dir.mkdirs();
-            assert success : "Unable to create faction Directory";
+            assert success : "Unable to create " + modID + " Directory";
         }
         return dir;
     }
