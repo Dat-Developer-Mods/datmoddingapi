@@ -12,7 +12,7 @@ public class DatModdingAPI
 {
     public static final String MODID = "datmoddingapi";
     public static final String NAME = "Dat Modding API";
-    public static final String VERSION = "1.2.0";
+    public static final String VERSION = "1.2.1";
     public static final String MC_VERSION = "[1.12.2]";
 
     @Mod.EventHandler
