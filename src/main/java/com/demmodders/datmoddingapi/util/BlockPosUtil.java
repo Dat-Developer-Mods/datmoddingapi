@@ -5,6 +5,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class BlockPosUtil {
+    /**
+     * Finds a safe location along the z axis
+     * Warning, thuis function isn't very good or well written, I'd avoid it
+     * @param Dim The dimension the position is in
+     * @param blockPos The starting position
+     * @param maxDistance The maximum distance to search
+     * @return A safe blockpos, or null
+     */
     public static BlockPos findSafeZ(int Dim, BlockPos blockPos, int maxDistance){
         BlockPos test = new BlockPos(blockPos);
         World world = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(Dim);
