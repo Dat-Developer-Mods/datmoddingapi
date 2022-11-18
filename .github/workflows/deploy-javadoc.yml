@@ -17,7 +17,6 @@ concurrency:
   group: "pages"
   cancel-in-progress: true
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   deploy:
     environment:
@@ -26,7 +25,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Pages
@@ -42,8 +40,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          # Upload entire repository
-          path: '/build/docs/javadoc'
+          path: './build/docs/javadoc'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
