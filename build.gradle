@@ -1,11 +1,12 @@
 plugins {
     id 'net.minecraftforge.gradle' version '5.1.+'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'maven-publish'
 }
 
 
 group = 'com.datdeveloper'
-version = '1.0.0'
+version = "${minecraftVersion}-1.0.1"
 
 java {
     archivesBaseName = 'datmoddingapi'
@@ -116,13 +117,58 @@ jar {
                 "Specification-Vendor"    : "jtljac",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
-                "Implementation-Version"  : "${minecraftVersion}-${project.jar.archiveVersion}",
+                "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : "jtljac",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
+}
 
-    version "${minecraftVersion}-${version}"
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = group
+            artifactId = project.name
+            version = project.jar.archiveVersion
+
+            from components.java
+
+            pom {
+                name = project.name
+                description = 'A concise description of my library'
+                url = 'http://www.example.com/library'
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://github.com/jtljac/DatModdingAPI/blob/master/LICENSE'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'jtljac'
+                        name = 'Jacob Lucas'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com.com/jtljac/datmoddingapi.git'
+                    developerConnection = 'scm:git:ssh://github.com/jtljac/datmoddingapi.git'
+                    url = 'http://datmoddingapi.com/datmoddingapi/'
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            // change to point to your repo, e.g. http://my.org/repo
+            name = "Dat-Maven-Repo"
+            url = "maven.datdeveloper.com/public"
+            credentials {
+                username = System.env.MAVENREPOUSER
+                password = System.env.MAVENREPOPASS
+            }
+        }
+    }
 }
 
 jar.finalizedBy('reobfJar')
