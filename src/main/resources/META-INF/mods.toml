@@ -42,7 +42,7 @@ displayTest="IGNORE_ALL_VERSION" # MATCH_VERSION is the default if nothing is sp
 
 # The description text for the mod (multi line!) (#mandatory)
 description = '''
-A modding library for Dat Modder
+A modding library for DatDeveloper
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.datmoddingapi]] #optional
