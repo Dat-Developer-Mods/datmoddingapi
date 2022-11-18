@@ -22,9 +22,6 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    env:
-      MAVENREPOUSER=${{secrets.MAVENREPOUSER}}
-      MAVENREPOPASS=${{secrets.MAVENREPOPASS}}
     runs-on: ubuntu-latest
 
     steps:
@@ -37,6 +34,9 @@ jobs:
           distribution: 'adopt'
           cache: gradle
       - name: deploy
+        env:
+          MAVENREPOUSER: ${{secrets.MAVENREPOUSER}}
+          MAVENREPOPASS: ${{secrets.MAVENREPOPASS}}
         run: gradle publish
         shell: bash
   deployJavadoc:
