@@ -34,6 +34,7 @@ jobs:
         with:
           java-version: 17
           distribution: 'adopt'
+          cache: gradle
       - name: Generate Javadoc
         run: gradle javadoc
         shell: bash
