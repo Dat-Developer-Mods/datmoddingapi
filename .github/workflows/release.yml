@@ -22,6 +22,9 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      MAVENREPOUSER=${{secrets.MAVENREPOUSER}}
+      MAVENREPOPASS=${{secrets.MAVENREPOPASS}}
     runs-on: ubuntu-latest
 
     steps:
