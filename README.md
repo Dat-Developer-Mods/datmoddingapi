@@ -30,7 +30,7 @@ DatTeleporter
 > Does not create a portal and does not make a sound on teleporting
 
 # Documentation
-Javadocs can be found at https://api.datdeveloper.com/DatModdingAPI
+Javadocs can be found at https://api.datdeveloper.com/DatModdingAPI/
 
 # Using as a library
 DatModdingAPI is available as a maven library at https://maven.datdeveloper.com/
