@@ -39,6 +39,11 @@ jobs:
           MAVENREPOPASS: ${{secrets.MAVENREPOPASS}}
         run: gradle publish
         shell: bash
+      - name: Upload jar to release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: ./build/libs/datmoddingapi-*.jar
   deployJavadoc:
     environment:
       name: github-pages
@@ -59,7 +64,7 @@ jobs:
       - name: Generate Javadoc
         run: gradle javadoc
         shell: bash
-      - name: Upload artifact
+      - name: Upload javadoc
         uses: actions/upload-pages-artifact@v1
         with:
           path: './build/docs/javadoc'
