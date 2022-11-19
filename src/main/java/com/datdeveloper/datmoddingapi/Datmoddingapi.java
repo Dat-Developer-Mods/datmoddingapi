@@ -52,15 +52,16 @@ public class Datmoddingapi {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
         DatConfig config = new DatConfig(builder);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, builder.build());
-
-        AsyncHandler.initialise();
-
-        DatPermissions.spongeLoaded = ModList.get().isLoaded("spongeforge");
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         // Some common setup code
         LOGGER.info("HELLO FROM COMMON SETUP");
+
+
+        AsyncHandler.initialise();
+
+        DatPermissions.spongeLoaded = ModList.get().isLoaded("spongeforge");
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
