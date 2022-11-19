@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
  * Cancels if the player moves
  * @see DelayedEventsHandler
  */
-public class DelayedTeleportEvent extends BaseDelayedEvent {
+public class DelayedTeleportEvent extends TimeDelayedEvent {
     /**
      * The position the player will teleport to
      */

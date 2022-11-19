@@ -1,5 +1,6 @@
 package com.datdeveloper.datmoddingapi;
 
+import com.datdeveloper.datmoddingapi.asyncTask.AsyncHandler;
 import com.datdeveloper.datmoddingapi.permissions.DatPermissions;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
@@ -51,6 +52,8 @@ public class Datmoddingapi {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
         DatConfig config = new DatConfig(builder);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, builder.build());
+
+        AsyncHandler.initialise();
 
         DatPermissions.spongeLoaded = ModList.get().isLoaded("spongeforge");
     }

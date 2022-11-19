@@ -23,7 +23,7 @@ public class AsyncHandler {
     private static final AsyncHandler instance = new AsyncHandler();
 
     /**
-     * Setup the Async handler, expects the config to be loaded
+     * Set up the Async handler, expects the config to be loaded
      */
     public static void initialise() {
         instance.service = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(Math.min(5, Math.max(DatConfig.getMaxAsyncThreadCount() / 4, 1)));

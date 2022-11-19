@@ -10,13 +10,13 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 /**
- * A system for delaying the execution of events
+ * A system for delaying the execution of events until a condition is met
  * <p>DelayedEvents <b>do not</b> execute in a different thread, rather they on the main server tick after their {@link IDelayedEvent#canExecute()} function tests true.</p>
  * <p>For executing tasks on another thread, see {@link com.datdeveloper.datmoddingapi.asyncTask.AsyncHandler}.</p>
  * <p>For an example of a delayed event, see {@link DelayedTeleportEvent}</p>
  *
  * @see IDelayedEvent
- * @see BaseDelayedEvent
+ * @see TimeDelayedEvent
  */
 @Mod.EventBusSubscriber(modid = Datmoddingapi.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class DelayedEventsHandler {
