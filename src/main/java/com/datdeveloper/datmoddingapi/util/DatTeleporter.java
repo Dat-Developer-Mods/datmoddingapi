@@ -11,7 +11,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Function;
 
+/**
+ * A simple teleporter that just teleports a player to a location in a level
+ * Does not produce a portal and does not produce a sound
+ */
 public class DatTeleporter implements ITeleporter {
+    /**
+     * The position to telepor the entity to
+     */
     BlockPos destination;
 
     public DatTeleporter(BlockPos destination) {

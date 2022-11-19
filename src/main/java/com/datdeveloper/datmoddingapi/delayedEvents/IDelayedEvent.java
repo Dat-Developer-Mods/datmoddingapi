@@ -1,5 +1,9 @@
 package com.datdeveloper.datmoddingapi.delayedEvents;
 
+/**
+ * The base interface for Delayed events
+ * @see DelayedEventsHandler
+ */
 public interface IDelayedEvent {
     /**
      * The code that will execute when the delay has passed
@@ -7,7 +11,7 @@ public interface IDelayedEvent {
     void execute();
 
     /**
-     * The check to ensure the conditions are correct for the
+     * The check to ensure the conditions are correct for the Delayed Event to execute
      * @return True if the conditions are right to execute this delayed event
      */
     boolean canExecute();

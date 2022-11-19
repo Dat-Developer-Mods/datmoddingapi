@@ -9,13 +9,27 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
+/**
+ * A system for delaying the execution of events
+ * <p>DelayedEvents <b>do not</b> execute in a different thread, rather they on the main server tick after their {@link IDelayedEvent#canExecute()} function tests true.</p>
+ * <p>For executing tasks on another thread, see {@link com.datdeveloper.datmoddingapi.asyncTask.AsyncHandler}.</p>
+ * <p>For an example of a delayed event, see {@link DelayedTeleportEvent}</p>
+ *
+ * @see IDelayedEvent
+ * @see BaseDelayedEvent
+ */
 @Mod.EventBusSubscriber(modid = Datmoddingapi.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class DelayedEventsQueue {
+public class DelayedEventsHandler {
     // Singleton Stuff
-    private static final DelayedEventsQueue instance = new DelayedEventsQueue();
+    private static final DelayedEventsHandler instance = new DelayedEventsHandler();
 
-    private Queue<IDelayedEvent> eventQueue = new ArrayDeque<>();
+    private final Queue<IDelayedEvent> eventQueue = new ArrayDeque<>();
 
+    /**
+     * Add a DelayedEvent to the Delay Queue
+     * @param event The event being added to the queue
+     * @see IDelayedEvent
+     */
     public static void addEvent(IDelayedEvent event) {
         instance.eventQueue.add(event);
     }

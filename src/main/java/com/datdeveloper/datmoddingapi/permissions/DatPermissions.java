@@ -9,9 +9,23 @@ import net.minecraftforge.server.permission.nodes.PermissionNode;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.service.permission.Subject;
 
+/**
+ * A permissionAPI agnostic system that allows for testing permission nodes without knowledge of the underlying PermissionAPI
+ * Currently handles Forge's permission api and sponges permission api
+ */
 public class DatPermissions {
+    /**
+     * Is sponge loaded?
+     */
     public static boolean spongeLoaded = false;
 
+    /**
+     * Checks if the given CommandSource has the given permission
+     * @param source The CommandSource being tested
+     * @param permissionNode The permission node to test
+     * @param context Extra context to the permission
+     * @return true if the CommandSource has permission
+     */
     public static boolean hasPermission(CommandSource source, PermissionNode<Boolean> permissionNode, PermissionDynamicContext<?>... context) {
         EPermissionSystem api;
 
