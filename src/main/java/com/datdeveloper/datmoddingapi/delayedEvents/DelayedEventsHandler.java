@@ -30,15 +30,15 @@ public class DelayedEventsHandler {
      * @param event The event being added to the queue
      * @see IDelayedEvent
      */
-    public static void addEvent(IDelayedEvent event) {
+    public static void addEvent(final IDelayedEvent event) {
         instance.eventQueue.add(event);
     }
 
     @SubscribeEvent
-    public static void onTick(TickEvent.ServerTickEvent event) {
+    public static void onTick(final TickEvent.ServerTickEvent event) {
         for (int dummy = 0; dummy < DatConfig.getDelayedEventsPerTick() && !instance.eventQueue.isEmpty(); ++dummy) {
             boolean executed = false;
-            IDelayedEvent nextEvent = instance.eventQueue.remove();
+            final IDelayedEvent nextEvent = instance.eventQueue.remove();
 
             if (nextEvent.canExecute()) {
                 nextEvent.execute();

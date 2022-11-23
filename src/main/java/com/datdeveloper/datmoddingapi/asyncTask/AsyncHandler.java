@@ -39,7 +39,7 @@ public class AsyncHandler {
      * @return A Future representing the task
      * @param <ReturnType> The return type of the task
      */
-    public static <ReturnType> Future<ReturnType> callAsyncTask(Callable<ReturnType> task) {
+    public static <ReturnType> Future<ReturnType> callAsyncTask(final Callable<ReturnType> task) {
         if (!AsyncHandler.instance.initialised) {
             logger.warn("Something attempted to schedule a task before the AsyncHandler was ready, ignoring");
             return null;
@@ -52,7 +52,7 @@ public class AsyncHandler {
      * Queue an async task
      * @param task The task to queue
      */
-    public static void runAsyncTask(Runnable task) {
+    public static void runAsyncTask(final Runnable task) {
         if (!AsyncHandler.instance.initialised) {
             logger.warn("Something attempted to schedule a task before the AsyncHandler was ready, ignoring");
             return;
@@ -69,7 +69,7 @@ public class AsyncHandler {
      * @return A ScheduledFuture representing the task
      * @param <ReturnType> The return type of the task
      */
-    public static <ReturnType> ScheduledFuture<ReturnType> scheduleAsyncTask(long delay, TimeUnit unit, Callable<ReturnType> task) {
+    public static <ReturnType> ScheduledFuture<ReturnType> scheduleAsyncTask(final long delay, final TimeUnit unit, final Callable<ReturnType> task) {
         if (!AsyncHandler.instance.initialised) {
             logger.warn("Something attempted to schedule a task before the AsyncHandler was ready, ignoring");
             return null;
@@ -85,7 +85,7 @@ public class AsyncHandler {
      * @param task The task to queue
      * @return A ScheduledFuture representing the task
      */
-    public static ScheduledFuture<?> scheduleAsyncTask(long delay, TimeUnit unit, Runnable task) {
+    public static ScheduledFuture<?> scheduleAsyncTask(final long delay, final TimeUnit unit, final Runnable task) {
         if (!AsyncHandler.instance.initialised) {
             logger.warn("Something attempted to schedule a task before the AsyncHandler was ready, ignoring");
             return null;
@@ -102,7 +102,7 @@ public class AsyncHandler {
      * @param task the task to queue
      * @return A scheduledFuture representing the task (This is used to stop the event, do not lose it)
      */
-    public static ScheduledFuture<?> scheduleFixedRateAsyncTask(long initialDelay, long period, TimeUnit unit, Runnable task) {
+    public static ScheduledFuture<?> scheduleFixedRateAsyncTask(final long initialDelay, final long period, final TimeUnit unit, final Runnable task) {
         if (!AsyncHandler.instance.initialised) {
             logger.warn("Something attempted to schedule a task before the AsyncHandler was ready, ignoring");
             return null;

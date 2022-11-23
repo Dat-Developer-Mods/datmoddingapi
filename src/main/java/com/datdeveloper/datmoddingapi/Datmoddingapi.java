@@ -1,6 +1,7 @@
 package com.datdeveloper.datmoddingapi;
 
 import com.datdeveloper.datmoddingapi.asyncTask.AsyncHandler;
+import com.datdeveloper.datmoddingapi.command.arguments.DatArguments;
 import com.datdeveloper.datmoddingapi.permissions.DatPermissions;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
@@ -41,7 +42,7 @@ public class Datmoddingapi {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public Datmoddingapi() {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
@@ -50,7 +51,9 @@ public class Datmoddingapi {
         MinecraftForge.EVENT_BUS.register(this);
 
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
-        DatConfig config = new DatConfig(builder);
+
+        final ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
+        final DatConfig config = new DatConfig(builder);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, builder.build());
 
         DatPermissions.spongeLoaded = ModList.get().isLoaded("spongeforge");
@@ -66,7 +69,7 @@ public class Datmoddingapi {
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event) {
+    public void onServerStarting(final ServerStartingEvent event) {
         // Do something when the server starts
         LOGGER.info("HELLO from server starting");
     }

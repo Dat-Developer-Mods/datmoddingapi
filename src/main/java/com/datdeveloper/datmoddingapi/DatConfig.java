@@ -9,7 +9,7 @@ public class DatConfig {
     private static ConfigValue<Integer> delayedEventsPerTick;
     private static ConfigValue<Integer> maxAsyncThreadCount;
     private static ConfigValue<EPermissionSystem> permissionSystem;
-    DatConfig(ForgeConfigSpec.Builder builder) {
+    DatConfig(final ForgeConfigSpec.Builder builder) {
         delayedEventsPerTick = builder
                 .comment("The amount of delayed events that are processed a tick, less is quicker")
                 .defineInRange("DelayedEventsPerTick", 1, 0, Integer.MAX_VALUE);

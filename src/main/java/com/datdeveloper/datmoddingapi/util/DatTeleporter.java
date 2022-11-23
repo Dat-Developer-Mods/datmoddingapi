@@ -21,22 +21,22 @@ public class DatTeleporter implements ITeleporter {
      */
     BlockPos destination;
 
-    public DatTeleporter(BlockPos destination) {
+    public DatTeleporter(final BlockPos destination) {
         this.destination = destination;
     }
 
     @Override
-    public @Nullable PortalInfo getPortalInfo(Entity entity, ServerLevel destWorld, Function<ServerLevel, PortalInfo> defaultPortalInfo) {
+    public @Nullable PortalInfo getPortalInfo(final Entity entity, final ServerLevel destWorld, final Function<ServerLevel, PortalInfo> defaultPortalInfo) {
         return new PortalInfo(new Vec3(destination.getX(), destination.getY(), destination.getZ()), Vec3.ZERO, entity.getYRot(), entity.getXRot());
     }
 
     @Override
-    public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
+    public Entity placeEntity(final Entity entity, final ServerLevel currentWorld, final ServerLevel destWorld, final float yaw, final Function<Boolean, Entity> repositionEntity) {
         return repositionEntity.apply(false);
     }
 
     @Override
-    public boolean playTeleportSound(ServerPlayer player, ServerLevel sourceWorld, ServerLevel destWorld) {
+    public boolean playTeleportSound(final ServerPlayer player, final ServerLevel sourceWorld, final ServerLevel destWorld) {
         return false;
     }
 }

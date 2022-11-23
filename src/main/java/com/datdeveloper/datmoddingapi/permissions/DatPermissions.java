@@ -26,8 +26,8 @@ public class DatPermissions {
      * @param context Extra context to the permission
      * @return true if the CommandSource has permission
      */
-    public static boolean hasPermission(CommandSource source, PermissionNode<Boolean> permissionNode, PermissionDynamicContext<?>... context) {
-        EPermissionSystem api;
+    public static boolean hasPermission(final CommandSource source, final PermissionNode<Boolean> permissionNode, final PermissionDynamicContext<?>... context) {
+        final EPermissionSystem api;
 
         if (DatConfig.getPermissionSystem() == EPermissionSystem.AUTO) api = (spongeLoaded ? EPermissionSystem.SPONGE : EPermissionSystem.FORGE);
         else api = DatConfig.getPermissionSystem();
@@ -37,7 +37,7 @@ public class DatPermissions {
             return PermissionAPI.getPermission(player, permissionNode, context);
         } else {
             if (!(source instanceof Player)) return true;
-            Subject subject = (Subject) source;
+            final Subject subject = (Subject) source;
             return subject.hasPermission(permissionNode.getNodeName());
         }
     }
