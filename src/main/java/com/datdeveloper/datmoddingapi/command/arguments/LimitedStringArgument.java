@@ -19,12 +19,40 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * A StringArgumentType that is limited to a maximum length
+ */
 public class LimitedStringArgument implements ArgumentType<String> {
     private static final SimpleCommandExceptionType ERROR_TOO_LONG = new SimpleCommandExceptionType(Component.literal("Argument exceeds maximum length"));
 
     StringArgumentType delegate;
     int maxLength;
-    protected LimitedStringArgument(final StringArgumentType.StringType type, final int maxLength) {
+
+    /**
+     * Get just one word
+     * @param maxLength the maximum length the word can be
+     */
+    public static LimitedStringArgument word(final int maxLength) {
+        return new LimitedStringArgument(StringArgumentType.StringType.SINGLE_WORD, maxLength);
+    }
+
+    /**
+     * Get a string denoted by being wrapped in quotes
+     * @param maxLength the maximum length the string can be
+     */
+    public static LimitedStringArgument string(final int maxLength) {
+        return new LimitedStringArgument(StringArgumentType.StringType.QUOTABLE_PHRASE, maxLength);
+    }
+
+    /**
+     * Get a string out of the remaining words in the command
+     * @param maxLength the maximum length the string can be
+     */
+    public static LimitedStringArgument greedyString(final int maxLength) {
+        return new LimitedStringArgument(StringArgumentType.StringType.GREEDY_PHRASE, maxLength);
+    }
+
+    public LimitedStringArgument(final StringArgumentType.StringType type, final int maxLength) {
         try {
             final Constructor<StringArgumentType> constructor = StringArgumentType.class.getDeclaredConstructor(StringArgumentType.StringType.class);
             constructor.setAccessible(true);
