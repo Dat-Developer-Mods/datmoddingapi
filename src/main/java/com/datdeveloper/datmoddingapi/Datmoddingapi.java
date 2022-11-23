@@ -50,7 +50,7 @@ public class Datmoddingapi {
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
 
-        ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
+        DatArguments.COMMAND_ARGUMENT_TYPES.register(modEventBus);
 
         final ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
         final DatConfig config = new DatConfig(builder);
