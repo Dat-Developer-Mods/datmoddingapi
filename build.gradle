@@ -11,6 +11,9 @@ version = "${minecraftVersion}-1.2.0"
 java {
     archivesBaseName = 'datmoddingapi'
     toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+    withJavadocJar()
+    withSourcesJar()
 }
 
 minecraft {
