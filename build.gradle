@@ -157,6 +157,14 @@ publishing {
                     developerConnection = 'scm:git:ssh://github.com/jtljac/datmoddingapi.git'
                     url = 'https://datdeveloper.com/datmoddingapi/'
                 }
+
+                withXml {
+                    asNode().dependencies.dependency.each { dep ->
+                        if(dep.artifactId.last().value().last() == "forge") {
+                            assert dep.parent().remove(dep)
+                        }
+                    }
+                }
             }
         }
     }
@@ -178,4 +186,8 @@ jar.finalizedBy('reobfJar')
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
+
+tasks.withType(GenerateModuleMetadata) {
+    enabled = false
 }
