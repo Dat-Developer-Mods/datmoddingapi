@@ -14,6 +14,10 @@ Async Handler
 
 > Events are an implementation of IDelayedEvent, for an example of an event look at DelayedTeleportEvent
 
+## Commands
+Pager
+> A command utility for taking a list of objects and converting them into a series of pages that are navigable using in-text buttons.
+
 ## Permissions
 DatPermissions
 > A permission abstraction system that allows testing permission nodes without worrying about the permission backend
