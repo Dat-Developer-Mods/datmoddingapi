@@ -4,6 +4,7 @@ import com.datdeveloper.datmoddingapi.util.DatChatFormatting;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSource;
 import net.minecraft.network.chat.*;
+import org.checkerframework.checker.units.qual.C;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -197,7 +198,10 @@ public class Pager<PagedElement> {
      * @param source The command source to send the page to
      */
     public void sendPage(final int page, final CommandSource source) {
-        if (page > getTotalPageCount()) return;
+        if (page > getTotalPageCount()) {
+            source.sendSystemMessage(Component.literal(DatChatFormatting.TextColour.ERROR + "There aren't that many pages"));
+            return;
+        }
 
         final MutableComponent component = MutableComponent.create(ComponentContents.EMPTY);
         if (headerText != null) {
