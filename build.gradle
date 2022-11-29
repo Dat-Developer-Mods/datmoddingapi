@@ -109,7 +109,7 @@ repositories {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraftVersion}-${forgeVersion}"
-    implementation 'org.spongepowered:spongeapi:8.1.0'
+    implementation 'org.spongepowered:spongeapi:9.0.0'
 }
 
 // Example for how to get properties into the manifest for reading at runtime.

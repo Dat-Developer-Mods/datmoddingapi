@@ -13,6 +13,7 @@ import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.synchronization.ArgumentTypeInfo;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -88,14 +89,14 @@ public class LimitedStringArgument implements ArgumentType<String> {
         }
 
         @Override
-        public Template deserializeFromNetwork(final FriendlyByteBuf pBuffer) {
+        public @NotNull Template deserializeFromNetwork(final FriendlyByteBuf pBuffer) {
             final StringArgumentType.StringType type = pBuffer.readEnum(StringArgumentType.StringType.class);
             final int maxLength = pBuffer.readInt();
             return new Template(type, maxLength);
         }
 
         @Override
-        public void serializeToJson(final Template pTemplate, final JsonObject pJson) {
+        public void serializeToJson(final Template pTemplate, final @NotNull JsonObject pJson) {
             final String s = switch (pTemplate.type) {
                 case SINGLE_WORD -> "word";
                 case QUOTABLE_PHRASE -> "phrase";
@@ -107,7 +108,7 @@ public class LimitedStringArgument implements ArgumentType<String> {
         }
 
         @Override
-        public Template unpack(final LimitedStringArgument pArgument) {
+        public @NotNull Template unpack(final LimitedStringArgument pArgument) {
             return new Template(pArgument.delegate.getType(), pArgument.maxLength);
         }
 
@@ -121,12 +122,12 @@ public class LimitedStringArgument implements ArgumentType<String> {
             }
 
             @Override
-            public LimitedStringArgument instantiate(final CommandBuildContext pContext) {
+            public @NotNull LimitedStringArgument instantiate(final @NotNull CommandBuildContext pContext) {
                 return new LimitedStringArgument(type, maxLength);
             }
 
             @Override
-            public ArgumentTypeInfo<LimitedStringArgument, ?> type() {
+            public @NotNull ArgumentTypeInfo<LimitedStringArgument, ?> type() {
                 return Info.this;
             }
         }

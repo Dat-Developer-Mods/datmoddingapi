@@ -19,7 +19,7 @@ public class DatTeleporter implements ITeleporter {
     /**
      * The position to telepor the entity to
      */
-    BlockPos destination;
+    final BlockPos destination;
 
     public DatTeleporter(final BlockPos destination) {
         this.destination = destination;

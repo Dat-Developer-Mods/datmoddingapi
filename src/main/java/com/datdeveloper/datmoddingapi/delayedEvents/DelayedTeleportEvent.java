@@ -36,7 +36,7 @@ public class DelayedTeleportEvent extends TimeDelayedEvent {
      */
     public BlockPos startingPos;
 
-    public DelayedTeleportEvent(BlockPos destinationPos, ResourceKey<Level> destinationWorld, ServerPlayer player, int Delay) {
+    public DelayedTeleportEvent(final BlockPos destinationPos, final ResourceKey<Level> destinationWorld, final ServerPlayer player, final int Delay) {
         super(Delay);
         this.destinationPos = destinationPos;
         this.destinationWorld = destinationWorld;
@@ -47,8 +47,7 @@ public class DelayedTeleportEvent extends TimeDelayedEvent {
 
     @Override
     public void execute() {
-        @SuppressWarnings("ConstantConditions")
-        ServerLevel level = player.getServer().getLevel(destinationWorld);
+        @SuppressWarnings("ConstantConditions") final ServerLevel level = player.getServer().getLevel(destinationWorld);
         if (level == null) {
             player.sendSystemMessage(Component.literal(ChatFormatting.RED + "Failed to find level"));
             return;
@@ -58,7 +57,7 @@ public class DelayedTeleportEvent extends TimeDelayedEvent {
     }
 
     @Override
-    public boolean shouldRequeue(boolean hasFinished) {
+    public boolean shouldRequeue(final boolean hasFinished) {
         if (!hasFinished && startingPos.distToCenterSqr(player.position()) > 1) {
             player.sendSystemMessage(Component.literal(DatChatFormatting.TextColour.ERROR + "Teleport cancelled"));
             return false;
