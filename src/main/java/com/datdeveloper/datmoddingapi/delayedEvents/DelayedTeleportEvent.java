@@ -59,7 +59,7 @@ public class DelayedTeleportEvent extends TimeDelayedEvent {
 
     @Override
     public boolean shouldRequeue(boolean hasFinished) {
-        if (startingPos.distToCenterSqr(player.position()) > 1) {
+        if (!hasFinished && startingPos.distToCenterSqr(player.position()) > 1) {
             player.sendSystemMessage(Component.literal(DatChatFormatting.TextColour.ERROR + "Teleport cancelled"));
             return false;
         }
