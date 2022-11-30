@@ -6,7 +6,7 @@ plugins {
 
 
 group = 'com.datdeveloper'
-version = "${minecraftVersion}-1.4.2"
+version = "${minecraftVersion}-1.4.3"
 
 java {
     archivesBaseName = 'datmoddingapi'

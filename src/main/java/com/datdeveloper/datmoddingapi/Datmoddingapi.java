@@ -1,7 +1,6 @@
 package com.datdeveloper.datmoddingapi;
 
 import com.datdeveloper.datmoddingapi.asyncTask.AsyncHandler;
-import com.datdeveloper.datmoddingapi.command.arguments.DatArguments;
 import com.datdeveloper.datmoddingapi.permissions.DatPermissions;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -35,8 +34,6 @@ public class Datmoddingapi {
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
 
-        DatArguments.COMMAND_ARGUMENT_TYPES.register(modEventBus);
-
         final ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
         final DatConfig config = new DatConfig(builder);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, builder.build());
@@ -45,17 +42,6 @@ public class Datmoddingapi {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
-
-
         AsyncHandler.initialise();
-    }
-
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
-    @SubscribeEvent
-    public void onServerStarting(final ServerStartingEvent event) {
-        // Do something when the server starts
-        LOGGER.info("HELLO from server starting");
     }
 }
