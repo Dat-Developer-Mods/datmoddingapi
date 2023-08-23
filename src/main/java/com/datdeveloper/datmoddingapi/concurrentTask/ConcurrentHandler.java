@@ -2,7 +2,6 @@ package com.datdeveloper.datmoddingapi.concurrentTask;
 
 import com.datdeveloper.datmoddingapi.DatConfig;
 import com.datdeveloper.datmoddingapi.Datmoddingapi;
-import com.datdeveloper.datmoddingapi.delayedEvents.IDelayedEvent;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

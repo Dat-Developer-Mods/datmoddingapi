@@ -12,7 +12,7 @@ import java.util.Queue;
 /**
  * A system for delaying the execution of events until a condition is met
  * <p>DelayedEvents <b>do not</b> execute in a different thread, rather they on the main server tick after their {@link IDelayedEvent#canExecute()} function tests true.</p>
- * <p>For executing tasks on another thread, see {@link com.datdeveloper.datmoddingapi.concurrentTask.AsyncHandler}.</p>
+ * <p>For executing tasks on another thread, see {@link com.datdeveloper.datmoddingapi.concurrentTask.ConcurrentHandler}.</p>
  * <p>For an example of a delayed event, see {@link DelayedTeleportEvent}</p>
  *
  * @see IDelayedEvent

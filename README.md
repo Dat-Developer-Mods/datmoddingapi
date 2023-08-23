@@ -1,11 +1,11 @@
 A modding library for DatDeveloper
 
 # Features
-## Async Tasks
-Async Handler
+## Concurrent Tasks
+Concurrent Tasks
 > A system for scheduling tasks to execute concurrently, optionally after a delay
 > 
-> Async Tasks execute on another thread, and thus can lead to race conditions if thread safety is not followed
+> Concurrent Tasks execute on another thread, and thus can lead to race conditions if thread safety is not followed
 
 ## Delayed Events
 > A system for scheduling tasks to execute after a condition is met
