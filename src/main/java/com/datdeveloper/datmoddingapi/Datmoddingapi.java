@@ -1,13 +1,11 @@
 package com.datdeveloper.datmoddingapi;
 
-import com.datdeveloper.datmoddingapi.asyncTask.AsyncHandler;
+import com.datdeveloper.datmoddingapi.concurrentTask.ConcurrentHandler;
 import com.datdeveloper.datmoddingapi.permissions.DatPermissions;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -42,6 +40,6 @@ public class Datmoddingapi {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        AsyncHandler.initialise();
+        ConcurrentHandler.initialise();
     }
 }
