@@ -1,4 +1,6 @@
 A modding library for DatDeveloper
+
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/)
 [![GitHub Release](https://img.shields.io/github/release/Dat-Developer-Mods/datmoddingapi.svg?style=flat)]()
 
 # Features
@@ -36,6 +38,7 @@ DatTeleporter
 
 # Documentation
 General help can be found at https://github.com/Dat-Developer-Mods/datmoddingapi/wiki
+
 Javadocs can be found at https://api.datdeveloper.com/datmoddingapi/
 
 # Using as a library
