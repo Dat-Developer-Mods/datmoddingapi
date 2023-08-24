@@ -1,4 +1,5 @@
 A modding library for DatDeveloper
+[![GitHub Release](https://img.shields.io/github/release/Dat-Developer-Mods/datmoddingapi.svg?style=flat)]()
 
 # Features
 ## Concurrent Tasks
@@ -34,19 +35,26 @@ DatTeleporter
 > Does not create a portal and does not make a sound on teleporting
 
 # Documentation
-Javadocs can be found at https://api.datdeveloper.com/DatModdingAPI/
+General help can be found at https://github.com/Dat-Developer-Mods/datmoddingapi/wiki
+Javadocs can be found at https://api.datdeveloper.com/datmoddingapi/
 
 # Using as a library
 DatModdingAPI is available as a maven library at https://maven.datdeveloper.com/
 
-To add to your project, add the following repository to your buildscript
+To add to your project, add the following repository in `build.gradle`
 ```groovy
 maven {
     url "https://maven.datdeveloper.com/releases"
 }
 ```
 
-Then add the following dependency, changing version to the latest available version
+Create a version variable in `gradle.properties`, changing `MINCRAFTVERSION` to your version of minecraft, and `VERSION`
+to the latest available version of `Dat Modding API`
 ```groovy
-implementation "com.datdeveloper:datmoddingapi:VERSION"
+datmoddingapi_version=MINECRAFTVERSION-VERSION
+```
+
+Then add the following dependency in `build.gradle`
+```groovy
+implementation fg.deobf("com.datdeveloper:datmoddingapi:${datmoddingapi_version}")
 ```
