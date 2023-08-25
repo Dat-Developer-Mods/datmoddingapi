@@ -39,7 +39,7 @@ DatTeleporter
 # Documentation
 General help can be found at https://github.com/Dat-Developer-Mods/datmoddingapi/wiki
 
-Javadocs can be found at https://api.datdeveloper.com/datmoddingapi/
+Javadocs can be found at https://api.datdeveloper.com/
 
 # Using as a library
 DatModdingAPI is available as a maven library at https://maven.datdeveloper.com/
