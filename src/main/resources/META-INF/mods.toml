@@ -1,33 +1,35 @@
 modLoader = "javafml"
 loaderVersion = "${loader_version_range}"
-license = "MIT"
+license = "${mod_license}"
+issueTrackerURL = "https://github.com/Dat-Developer-Mods/datmoddingapi/issues"
 
 [[mods]]
-modId = "datmoddingapi"
+modId = "${mod_id}"
 version = "${mod_version}"
-displayName = "Dat Modding API"
-authors = "jtljac"
-displayTest="IGNORE_SERVER_VERSION"
+displayName = "${mod_name}"
+#updateJSONURL="https://change.me.example.invalid/updates.json"
+displayURL = "datdeveloper.com"
+logoFile = "datmoddingapi.png"
+#credits="Thanks for this example mod goes to Java"
+authors = "${mod_authors}"
+displayTest = "IGNORE_SERVER_VERSION"
+description = '''${mod_description}'''
 
-description = '''
-A modding library for DatDeveloper
-'''
-
-[[dependencies.datmoddingapi]]
+[[dependencies.${mod_id}]]
 modId = "forge"
 mandatory = true
 versionRange = "${forge_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.datmoddingapi]]
+[[dependencies.${mod_id}]]
 modId = "minecraft"
 mandatory = true
 versionRange = "${minecraft_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.datmoddingapi]]
+[[dependencies.${mod_id}]]
 modId = "spongeforge"
 mandatory = false
 versionRange = "[8.0.0,)"
