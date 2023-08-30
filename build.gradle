@@ -1,7 +1,14 @@
+import net.darkhax.curseforgegradle.TaskPublishCurseForge
+
 plugins {
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+
+    id 'idea'
+
     id 'maven-publish'
+    id "com.modrinth.minotaur" version "2.+"
+    id 'net.darkhax.curseforgegradle' version '1.1.16'
 }
 
 group = mod_group_id
@@ -127,6 +134,7 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }
 
+// Maven Publishing
 publishing {
     publications {
         maven(MavenPublication) {
@@ -168,17 +176,46 @@ publishing {
             }
         }
     }
-
     repositories {
         maven {
             name = "Dat-Maven-Repo"
             url = "https://maven.datdeveloper.com/releases"
             credentials {
-                username = System.env.MAVENREPOUSER
-                password = System.env.MAVENREPOPASS
+                username = System.getenv("MAVENREPOUSER")
+                password = System.getenv("MAVENREPOPASS")
             }
         }
     }
+}
+
+// Curse Publishing
+tasks.register('publishCurseForge', TaskPublishCurseForge) {
+    dependsOn(tasks.jar)
+    group = "publishing"
+
+    apiToken=System.getenv("CURSEFORGE_TOKEN")
+    def mainFile=upload(curse_id, jar)
+    mainFile.releaseType='release'
+    mainFile.changelog=System.getenv("CHANGELOG")
+    mainFile.changelogType='markdown'
+    mainFile.displayName="${mod_name} - ${version}"
+    mainFile.addModLoader("Forge")
+    mainFile.addGameVersion(minecraft_version)
+    mainFile.addJavaVersion("Java 17")
+}
+
+// Modrinth Publishing
+modrinth {
+    token=System.getenv("MODRINTH_TOKEN")
+    projectId=modrinth_id
+    versionName="${mod_name} - ${version}"
+    uploadFile=jar
+    gameVersions=[minecraft_version]
+    changelog=System.getenv("CHANGELOG")
+}
+
+publish.configure {
+    dependsOn(tasks.modrinth, tasks.publishCurseForge)
 }
 
 tasks.withType(GenerateModuleMetadata) {
