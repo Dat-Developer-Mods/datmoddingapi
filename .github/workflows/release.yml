@@ -34,7 +34,7 @@ jobs:
         id: vars
         run: |
           git fetch --tags origin
-          LAST_TAG=$(git describe --abbrev=0 ${{github.ref_name}}^ --tags)
+          LAST_TAG=$(git describe --abbrev=0 ${{github.ref}}^ --tags)
           MOD_VERSION=$(gradle -q printVersion)
       - name: Setup Java
         uses: actions/setup-java@v3
