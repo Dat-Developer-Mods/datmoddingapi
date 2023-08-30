@@ -6,7 +6,6 @@ on:
     # Pattern matched against refs/tags
     tags:        
       - '*'
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -31,6 +30,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Setup Vars
+        id: vars
+        run: |
+          LAST_TAG=$(git describe --abbrev=0 HEAD^ --tags)
+          MOD_VERSION=$(gradle -q printVersion)
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
@@ -49,6 +53,12 @@ jobs:
         uses: gradle/gradle-build-action@2.4.2
         with:
           gradle-version: 8.1.1
+      - name: Version Check
+        if: ${{steps.vars.output.MOD_VERSION}} != ${{github.ref_name}}
+        uses: actions/github-script@v3
+        with:
+          script: |
+            core.setFailed('Mod configured with incorrect version')
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: deploy
@@ -57,7 +67,7 @@ jobs:
           MAVENREPOPASS: ${{secrets.MAVENREPOPASS}}
           MODRINTH_TOKEN: ${{secrets.MODRINTH_TOKEN}}
           CURSEFORGE_TOKEN: ${{secrets.CURSEFORGE_TOKEN}}
-          CHANGELOG: ${{ github.event.release.body }}
+          LAST_TAG: ${{steps.var.output.LAST_TAG}}
         run: gradle publish
         shell: bash
       - name: Upload jar to release
@@ -65,6 +75,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: ./build/libs/datmoddingapi-*.jar
+          bodyFile: ./CHANGELOG.md
       - name: Generate Javadoc
         run: gradle javadoc
         shell: bash

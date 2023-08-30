@@ -1,0 +1,18 @@
+{{#ifContainsIssueLabel issues label='enhancement'}}
+    # Features
+    {{#issues}}
+        {{#hasLink}}
+            ## [{{issue}}]({{link}}) {{title}}
+        {{/hasLink}}
+    {{/issues}}
+{{/ifContainsIssueLabel}}
+
+{{#ifContainsIssueLabel issues label='bug'}}
+    # Bugfixes
+    {{#issues}}
+        {{#hasLink}}
+            ## [{{issue}}]({{link}}) {{title}}
+        {{/hasLink}}
+    {{/issues}}
+{{/ifContainsIssueLabel}}
+
