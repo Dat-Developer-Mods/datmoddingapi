@@ -60,7 +60,7 @@ jobs:
           echo "MOD_VERSION=$(gradle -q printVersion)" >> "$GITHUB_OUTPUT"
 
       - name: Version Check
-        if: ${{steps.vars.outputs.MOD_VERSION}} != ${{github.ref_name}}
+        if: ${{ steps.vars.outputs.MOD_VERSION != github.ref_name }}
         uses: actions/github-script@v3
         with:
           script: |
