@@ -60,11 +60,11 @@ jobs:
           echo "MOD_VERSION=$(gradle -q printVersion)" >> $GITHUB_ENV
 
       - name: Version Check
-        if: ${MOD_VERSION} != ${{github.ref_name}}
+        if: "${MOD_VERSION}" != ${{github.ref_name}}
         uses: actions/github-script@v3
         with:
           script: |
-            core.setFailed('Mod configured with incorrect version\nMod Version: ${MOD_VERSION}\nGithub Version: ${{github.ref_name}}')
+            core.setFailed("Mod configured with incorrect version\nMod Version: ${MOD_VERSION}\nGithub Version: ${{github.ref_name}}")
 
       - name: Setup Pages
         uses: actions/configure-pages@v2
