@@ -34,16 +34,15 @@ jobs:
           # Full clone to allow getting the last tag
           fetch-depth: 0
           fetch-tags: true
-      - name: Setup Vars
-        id: vars
-        run: |
-          LAST_TAG=$(git describe --abbrev=0 HEAD^ --tags)
-          MOD_VERSION=$(gradle -q printVersion)
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
           java-version: 17
           distribution: 'adopt'
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2.8.0
+        with:
+          gradle-version: 8.1.1
       - name: Cache Gradle files
         uses: actions/cache@v2
         if: ${{ !env.ACT }}
@@ -53,16 +52,20 @@ jobs:
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('*/build.gradle', '*/settings.gradle', '*gradle.*') }}
           restore-keys: ${{ runner.os }}-gradle-
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2.8.0
-        with:
-          gradle-version: 8.1.1
+
+      - name: Setup Vars
+        id: vars
+        run: |
+          LAST_TAG=$(git describe --abbrev=0 HEAD^ --tags)
+          MOD_VERSION=$(gradle -q printVersion)
+
       - name: Version Check
         if: ${{steps.vars.output.MOD_VERSION}} != ${{github.ref_name}}
         uses: actions/github-script@v3
         with:
           script: |
             core.setFailed('Mod configured with incorrect version')
+
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: deploy
