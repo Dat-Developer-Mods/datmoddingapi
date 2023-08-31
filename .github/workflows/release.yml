@@ -30,12 +30,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          # Full clone to allow getting the last tag
+          fetch-depth: 0
+          fetch-tags: true
       - name: Setup Vars
         id: vars
         run: |
-          git fetch --tags origin
-          git describe --tags
-          LAST_TAG=$(git describe --abbrev=0 ${{github.ref}}^ --tags)
+          LAST_TAG=$(git describe --abbrev=0 HEAD^ --tags)
           MOD_VERSION=$(gradle -q printVersion)
       - name: Setup Java
         uses: actions/setup-java@v3
