@@ -60,11 +60,11 @@ jobs:
           MOD_VERSION=$(gradle -q printVersion)
 
       - name: Version Check
-        if: ${{steps.vars.output.MOD_VERSION}} != ${{github.ref_name}}
+        if: ${{steps.vars.outputs.MOD_VERSION}} != ${{github.ref_name}}
         uses: actions/github-script@v3
         with:
           script: |
-            core.setFailed('Mod configured with incorrect version')
+            core.setFailed('Mod configured with incorrect version\nMod Version: ${{steps.vars.outputs.MOD_VERSION}}\nGithub Version: ${{github.ref_name}}')
 
       - name: Setup Pages
         uses: actions/configure-pages@v2
@@ -74,7 +74,7 @@ jobs:
           MAVENREPOPASS: ${{secrets.MAVENREPOPASS}}
           MODRINTH_TOKEN: ${{secrets.MODRINTH_TOKEN}}
           CURSEFORGE_TOKEN: ${{secrets.CURSEFORGE_TOKEN}}
-          LAST_TAG: ${{steps.var.output.LAST_TAG}}
+          LAST_TAG: ${{steps.var.outputs.LAST_TAG}}
         run: gradle publish
         shell: bash
       - name: Upload jar to release
