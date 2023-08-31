@@ -1,0 +1,57 @@
+name: "CodeQL"
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  schedule:
+    - cron: '23 23 * * 2'
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: 'ubuntu-latest'
+    timeout-minutes: 360 
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'java' ]
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Setup Java
+      uses: actions/setup-java@v3
+      with:
+        java-version: 17
+        distribution: 'adopt'
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2.8.0
+      with:
+        gradle-version: 8.1.1
+    - name: Cache Gradle files
+      uses: actions/cache@v2
+      if: ${{ !env.ACT }}
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('*/build.gradle', '*/settings.gradle', '*gradle.*') }}
+        restore-keys: ${{ runner.os }}-gradle-
+        
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: ${{ matrix.language }}
+    - name: build
+      run: gradle build
+      shell: bash
+        
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
+      with:
+        category: "/language:${{matrix.language}}"
