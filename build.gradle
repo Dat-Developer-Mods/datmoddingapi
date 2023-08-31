@@ -1,16 +1,4 @@
 import net.darkhax.curseforgegradle.TaskPublishCurseForge
-import se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask
-
-buildscript {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'se.bjurr.gitchangelog:git-changelog-lib:1.172.1'
-    }
-}
 
 plugins {
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
@@ -21,8 +9,6 @@ plugins {
     id 'maven-publish'
     id "com.modrinth.minotaur" version "2.+"
     id 'net.darkhax.curseforgegradle' version '1.1.16'
-
-    id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '1.79.0'
 }
 
 group = mod_group_id
@@ -165,17 +151,6 @@ tasks.withType(JavaCompile).configureEach {
 /*  Publishing                                  */
 /* -------------------------------------------- */
 
-// Release Notes
-tasks.register('gitChangelogTask', GitChangelogTask) {
-    gitHubApi = "https://api.github.com/repos/Dat-Developer-Mods/datmoddingapi";
-    gitHubToken = System.getenv("GITHUB_TOKEN");
-    gitHubIssuePattern = "\\[#([0-9]*)\\]";
-    gitHubEnabled = true;
-    fromRef = System.getenv("LAST_TAG");
-    file = new File("CHANGELOG.md");
-    templateContent = new File('changelog.hbs').getText('UTF-8');
-}
-
 // Maven Publishing
 publishing {
     publications {
@@ -232,13 +207,13 @@ publishing {
 
 // Curse Publishing
 tasks.register('publishCurseForge', TaskPublishCurseForge) {
-    dependsOn(tasks.jar, tasks.gitChangelogTask)
+    dependsOn(tasks.jar)
     group = "publishing"
 
     apiToken=System.getenv("CURSEFORGE_TOKEN")
     def mainFile=upload(curse_id, jar)
     mainFile.releaseType='release'
-    mainFile.changelog=file('CHANGELOG.md');
+    mainFile.changelog=System.getenv("CHANGELOG")
     mainFile.changelogType='markdown'
     mainFile.displayName="${mod_name} - ${version}"
     mainFile.addModLoader("Forge")
@@ -248,17 +223,18 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
 
 // Modrinth Publishing
 modrinth {
+    debugMode=true
     token=System.getenv("MODRINTH_TOKEN")
     projectId=modrinth_id
     versionName="${mod_name} - ${version}"
     uploadFile=jar
     gameVersions=[minecraft_version]
-    changelog=new File('changelog.hbs').getText('UTF-8');
+    changelog=System.getenv("CHANGELOG")
 }
 
 // Dependencies
 tasks.modrinth.configure {
-    dependsOn(tasks.gitChangelogTask)
+    dependsOn(tasks.jar)
 }
 
 publish.configure {

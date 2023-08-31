@@ -59,6 +59,14 @@ jobs:
           echo "LAST_TAG=$(git describe --abbrev=0 HEAD^ --tags)" >> "$GITHUB_OUTPUT"
           echo "MOD_VERSION=$(gradle -q printVersion)" >> "$GITHUB_OUTPUT"
 
+      - name: Setup release info
+        id: releaseInfo
+        uses: cardinalby/git-get-release-action@1.2.4
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          tag: ${{ github.ref_name }}
+
       - name: Version Check
         if: ${{ steps.vars.outputs.MOD_VERSION != github.ref_name }}
         uses: actions/github-script@v3
@@ -74,7 +82,7 @@ jobs:
           MAVENREPOPASS: ${{secrets.MAVENREPOPASS}}
           MODRINTH_TOKEN: ${{secrets.MODRINTH_TOKEN}}
           CURSEFORGE_TOKEN: ${{secrets.CURSEFORGE_TOKEN}}
-          LAST_TAG: ${{steps.var.outputs.LAST_TAG}}
+          CHANGELOG: ${{steps.releaseInfo.outputs.body}}
         run: gradle publish
         shell: bash
       - name: Upload jar to release
@@ -82,7 +90,6 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: ./build/libs/datmoddingapi-*.jar
-          bodyFile: ./CHANGELOG.md
       - name: Generate Javadoc
         run: gradle javadoc
         shell: bash
