@@ -180,7 +180,7 @@ publishing {
                 scm {
                     connection = 'scm:git:git://github.com.com/dat-developer-mods/datmoddingapi.git'
                     developerConnection = 'scm:git:ssh://github.com/dat-developer-mods/datmoddingapi.git'
-                    url = 'https://datdeveloper.com/datmoddingapi/'
+                    url = 'https://api.datdeveloper.com/'
                 }
 
                 withXml {
