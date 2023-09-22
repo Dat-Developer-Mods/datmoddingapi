@@ -1,12 +1,10 @@
 package com.datdeveloper.datmoddingapi;
 
 import com.datdeveloper.datmoddingapi.concurrentTask.ConcurrentHandler;
-import com.datdeveloper.datmoddingapi.permissions.DatPermissions;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -35,8 +33,6 @@ public class Datmoddingapi {
         final ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
         final DatConfig config = new DatConfig(builder);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, builder.build());
-
-        DatPermissions.spongeLoaded = ModList.get().isLoaded("spongeforge");
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
