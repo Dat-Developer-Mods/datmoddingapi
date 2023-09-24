@@ -93,6 +93,10 @@ repositories {}
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+
+    // Testing
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10+'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10+'
 }
 
 /* -------------------------------------------- */
@@ -237,4 +241,12 @@ publish.configure {
 
 tasks.withType(GenerateModuleMetadata).configureEach {
     enabled = false
+}
+
+/* -------------------------------------------- */
+/*  Testing                                     */
+/* -------------------------------------------- */
+
+test {
+    useJUnitPlatform()
 }
