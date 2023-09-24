@@ -44,7 +44,8 @@ class TestDatLocalisation {
 
     @BeforeEach
     void clearTranslations() {
-
+        final DatLocalisation instance = DatLocalisation.getInstance();
+        instance.clearTranslations();
     }
 
     /**

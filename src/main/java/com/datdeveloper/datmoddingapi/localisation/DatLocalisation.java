@@ -15,6 +15,7 @@ import java.nio.file.Path;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 /**
@@ -144,5 +145,38 @@ public class DatLocalisation {
      */
     public String getLocalisation(final String key, final String fallback) {
         return translations.getOrDefault(key, fallback);
+    }
+
+    /**
+     * Clear all the translations
+     * <br>
+     * Warning, this clears <b>ALL</b> the translations, from all mods that have registered up until this point.
+     * This method was mainly added for testing reasons, so don't go misusing it.
+     * <br>
+     * If you really need to clear some translations, you should probably use {@link DatLocalisation#removeTranslation(String)}
+     * or {@link DatLocalisation#removeTranslations(Predicate)}
+     * @see DatLocalisation#removeTranslation(String) 
+     * @see DatLocalisation#removeTranslations(Predicate)  
+     */
+    public void clearTranslations() {
+        translations.clear();
+    }
+
+    /**
+     * Remove the translation with the matching key
+     * @see DatLocalisation#removeTranslations(Predicate)
+     * @param key The key of the translation to remove
+     */
+    public void removeTranslation(final String key) {
+        translations.remove(key);
+    }
+
+    /**
+     * Remove any translations that match the given predicate
+     * @see DatLocalisation#removeTranslation(String) 
+     * @param predicate The predicate that determines if a key should be removed
+     */
+    public void removeTranslations(final Predicate<String> predicate) {
+        translations.keySet().removeIf(predicate);
     }
 }
