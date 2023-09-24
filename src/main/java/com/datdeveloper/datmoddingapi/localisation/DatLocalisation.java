@@ -12,6 +12,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -40,12 +41,13 @@ public class DatLocalisation {
      * Invalid keys include:<br>
      * mymod, my&.test, %test.(you).doesn't.work
      */
-    private static final Pattern KEY_PATTERN = Pattern.compile("^([\\w-])\\.([\\w-](?:\\.[\\w-])+)$");
+    private static final Pattern KEY_PATTERN = Pattern.compile("^([\\w-]+)\\.([\\w-]+(?:\\.[\\w-]+)*+)$");
 
     private DatLocalisation() {
         translations = new HashMap<>();
     }
 
+    /** The instance of the translations */
     private static final DatLocalisation INSTANCE = new DatLocalisation();
 
     /**
@@ -130,13 +132,17 @@ public class DatLocalisation {
         return translations.get(key);
     }
 
+    public Map<String, String> getAllTranslations() {
+        return Collections.unmodifiableMap(translations);
+    }
+
     /**
      * Get a localised string from the store, returning the fallback if it doesn't exist
      * @param key The key of the localised string
      * @param fallback The string to return if the key isn't in the store
      * @return The localised string or the fallback
      */
-    public String getLocalisationOrDefault(final String key, final String fallback) {
+    public String getLocalisation(final String key, final String fallback) {
         return translations.getOrDefault(key, fallback);
     }
 }

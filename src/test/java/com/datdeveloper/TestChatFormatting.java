@@ -12,7 +12,7 @@ import java.util.Map;
 
 import static java.util.Map.entry;
 
-public class TestChatFormatting {
+class TestChatFormatting {
     /**
      * Check a string without any text replacements
      */
