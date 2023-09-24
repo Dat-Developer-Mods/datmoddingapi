@@ -68,13 +68,21 @@ public class Pager<PagedElement> {
         this.transformer = transformer;
     }
 
+    /**
+     * Get the total number of pages that this pager has
+     * @return The number of pages this pager has
+     */
     private int getTotalPageCount() {
         return (int) Math.ceil((float) elements.size() / (float) elementsPerPage);
     }
 
-    @SuppressWarnings("ConstantConditions")
+    /**
+     * Get the header for the pager
+     * @return The header for the pager
+     */
     protected Component getHeader() {
         String header = headerText;
+        @SuppressWarnings("ConstantConditions")
         int headerLength = 2 + headerText.length();
         if (headerText.length() % 2 == 1) {
             header += " ";

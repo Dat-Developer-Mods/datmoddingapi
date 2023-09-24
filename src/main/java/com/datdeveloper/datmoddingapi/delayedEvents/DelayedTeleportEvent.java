@@ -47,7 +47,8 @@ public class DelayedTeleportEvent extends TimeDelayedEvent {
 
     @Override
     public void execute() {
-        @SuppressWarnings("ConstantConditions") final ServerLevel level = player.getServer().getLevel(destinationWorld);
+        @SuppressWarnings("ConstantConditions")
+        final ServerLevel level = player.getServer().getLevel(destinationWorld);
         if (level == null) {
             player.sendSystemMessage(Component.literal(ChatFormatting.RED + "Failed to find level"));
             return;

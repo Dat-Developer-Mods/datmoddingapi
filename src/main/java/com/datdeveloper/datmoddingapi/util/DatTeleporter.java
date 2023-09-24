@@ -17,7 +17,7 @@ import java.util.function.Function;
  */
 public class DatTeleporter implements ITeleporter {
     /**
-     * The position to telepor the entity to
+     * The position to teleport the entity to
      */
     final BlockPos destination;
 
