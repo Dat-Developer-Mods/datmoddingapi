@@ -17,6 +17,10 @@ Concurrent Tasks
 
 > Events are an implementation of IDelayedEvent, for an example of an event look at DelayedTeleportEvent
 
+## Localisation
+DatLocalisation
+> A framework for loading localisation strings
+
 ## Commands
 Pager
 > A command utility for taking a list of objects and converting them into a series of pages that are navigable using in-text buttons.
@@ -30,11 +34,21 @@ DatPermissions
 ## Utilities
 DatChatFormatting
 > A set of standardised chat colours for consistently formatting chat messages
+>
+
+DatMessageFormatter
+> A utility for formatting strings into chat Components using variable replacements and shorthands for formatting directives
+
+NotificationHelper
+> A Utility with functions to simplify sending various types of notifications to a player
+> 
+> Supports displaying notifications as a title (in the middle of the player's screen), above the hotbar, and in chat.
 
 DatTeleporter
 > A simple ITeleporter implementation for moving the player to a specific location in another dimension 
 >
 > Does not create a portal and does not make a sound on teleporting
+
 
 # Documentation
 General help can be found at https://github.com/Dat-Developer-Mods/datmoddingapi/wiki

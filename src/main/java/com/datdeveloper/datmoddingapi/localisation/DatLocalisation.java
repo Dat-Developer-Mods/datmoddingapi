@@ -8,10 +8,7 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.util.GsonHelper;
 import org.slf4j.Logger;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -52,7 +49,7 @@ public class DatLocalisation {
     private static final DatLocalisation INSTANCE = new DatLocalisation();
 
     /**
-     * Get the DatLocalisation instance with the translations loaded
+     * Get the DatLocalisation instance
      * @return The DatLocalisation instance
      */
     public static DatLocalisation getInstance() {
@@ -62,7 +59,7 @@ public class DatLocalisation {
     /**
      * Load in a JSON file of localisations from a file
      * <br>
-     * First checks filepath, then checks classpath, if no file is found then an error will be logged
+     * First checks filepath, then checks classpath
      * <br>
      * Keys already in the table will be overridden.
      * <br>
@@ -76,8 +73,10 @@ public class DatLocalisation {
      * each part is separated by a ".". The first part is intended to be an identifier for the mod that uses the
      * translation, however this is not enforced.
      * @param localeFilePath The path on the classpath to the locale file containing the translations
+     * @throws FileNotFoundException Thrown when the given locale path cannot be found
+     * @throws IOException Thrown when the file at the given locale path experiences a failure during reading
      */
-    public void loadLocalisations(final String localeFilePath) {
+    public void loadLocalisations(final String localeFilePath) throws IOException {
         try {
             if (Files.exists(Path.of(localeFilePath))) {
                 try (final InputStream inputStream = new FileInputStream(localeFilePath)) {
@@ -88,17 +87,15 @@ public class DatLocalisation {
                     loadLocalisationsFromStream(inputStream);
                 }
             } else {
-                LOGGER.warn("Failed to find locale file: {}", localeFilePath);
+                throw new FileNotFoundException(localeFilePath);
             }
-        } catch (final IOException e) {
-            LOGGER.warn("Failed to load locale file: {}\n{}", localeFilePath, e.getMessage());
         } catch (final JsonSyntaxException e) {
             LOGGER.warn("Failed to parse locale file: {}\n{}", localeFilePath, e.getMessage());
         }
     }
 
     @SuppressWarnings("java:S4449")
-    private void loadLocalisationsFromStream(final InputStream localisationsFile) {
+    private void loadLocalisationsFromStream(final InputStream localisationsFile) throws JsonSyntaxException {
         final Gson gson = new Gson();
 
         final JsonObject json = gson.fromJson(new InputStreamReader(localisationsFile, StandardCharsets.UTF_8), JsonObject.class);
