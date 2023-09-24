@@ -5,6 +5,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,14 +75,14 @@ public class DatMessageFormatter {
         ITALIC(ChatFormatting.ITALIC, false),
         RESET(ChatFormatting.RESET, true),
 
-        INFO(ChatFormatting.GOLD, true),
-        ERROR(ChatFormatting.RED, true),
-        COMMAND(ChatFormatting.DARK_PURPLE, true),
-        HEADER(ChatFormatting.DARK_AQUA, true),
+        INFO(DatChatFormatting.TextColour.INFO, true),
+        ERROR(DatChatFormatting.TextColour.ERROR, true),
+        COMMAND(DatChatFormatting.TextColour.COMMAND, true),
+        HEADER(DatChatFormatting.TextColour.HEADER, true),
 
-        ONLINE(ChatFormatting.GREEN, true),
-        OFFLINE(ChatFormatting.RED, true),
-        AWAY(ChatFormatting.GOLD, true);
+        ONLINE(DatChatFormatting.PlayerColour.ONLINE, true),
+        OFFLINE(DatChatFormatting.PlayerColour.OFFLINE, true),
+        AWAY(DatChatFormatting.PlayerColour.AWAY, true);
 
         final ChatFormatting formatting;
         final boolean resets;
@@ -89,6 +90,28 @@ public class DatMessageFormatter {
         FormattingOperations(final ChatFormatting formatting, final boolean resets) {
             this.formatting = formatting;
             this.resets = resets;
+        }
+    }
+
+
+
+    /**
+     * Format the given chat string into a chat component using objects passed as arguments
+     * <br>
+     * A shortcut function for {@link DatMessageFormatter}
+     * <br>
+     * When an error is encountered in the {@link DatMessageFormatter} Then it is caught and dumped in the chat message.
+     * {@link DatMessageFormatter} should be used directly if you desire handling the error yourself.
+     * @see DatMessageFormatter
+     * @param formatString The string that is processed
+     * @param args The arguments to use to format the string
+     * @return A chat component containing the formatted text
+     */
+    public static Component formatChatString(final String formatString, final Object... args) {
+        try {
+            return new DatMessageFormatter(formatString, args).parse();
+        } catch (final ParseException e) {
+            return Component.literal(e.getMessage());
         }
     }
 

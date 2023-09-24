@@ -1,5 +1,6 @@
 package com.datdeveloper;
 
+import com.datdeveloper.datmoddingapi.util.DatChatFormatting;
 import com.datdeveloper.datmoddingapi.util.DatMessageFormatter;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -61,14 +62,14 @@ public class TestChatFormatting {
                 entry("italic", ChatFormatting.ITALIC),
                 entry("reset", ChatFormatting.RESET),
 
-                entry("info", ChatFormatting.GOLD),
-                entry("error", ChatFormatting.RED),
-                entry("command", ChatFormatting.DARK_PURPLE),
-                entry("header", ChatFormatting.DARK_AQUA),
+                entry("info", DatChatFormatting.TextColour.INFO),
+                entry("error", DatChatFormatting.TextColour.ERROR),
+                entry("command", DatChatFormatting.TextColour.COMMAND),
+                entry("header", DatChatFormatting.TextColour.HEADER),
 
-                entry("online", ChatFormatting.GREEN),
-                entry("offline", ChatFormatting.RED),
-                entry("away", ChatFormatting.GOLD)
+                entry("online", DatChatFormatting.PlayerColour.ONLINE),
+                entry("offline", DatChatFormatting.PlayerColour.OFFLINE),
+                entry("away", DatChatFormatting.PlayerColour.AWAY)
         );
 
         for (final Map.Entry<String, ChatFormatting> formattingString : formatting.entrySet()) {
