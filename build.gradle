@@ -1,7 +1,7 @@
 import net.darkhax.curseforgegradle.TaskPublishCurseForge
 
 plugins {
-    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'net.neoforged.gradle' version '[6.0.18,6.2)'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 
     id 'idea'
@@ -92,11 +92,11 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 repositories {}
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    minecraft "net.neoforged:forge:${minecraft_version}-${neo_version}"
 
     // Testing
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10+'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10+'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junit_version}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit_version}"
 }
 
 /* -------------------------------------------- */
@@ -214,7 +214,7 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
     mainFile.changelog=System.getenv("CHANGELOG")
     mainFile.changelogType='markdown'
     mainFile.displayName="${mod_name} - ${version}"
-    mainFile.addModLoader("Forge")
+    mainFile.addModLoader("NeoForge")
     mainFile.addGameVersion(minecraft_version)
     mainFile.addJavaVersion("Java 17")
 }

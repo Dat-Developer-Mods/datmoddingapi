@@ -173,7 +173,7 @@ public class DatLocalisation {
 
     /**
      * Remove any translations that match the given predicate
-     * @see DatLocalisation#removeTranslation(String) 
+     * @see DatLocalisation#removeTranslation(String)
      * @param predicate The predicate that determines if a key should be removed
      */
     public void removeTranslations(final Predicate<String> predicate) {
