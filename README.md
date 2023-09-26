@@ -37,7 +37,11 @@ AgeUtil
 
 DatChatFormatting
 > A set of standardised chat colours for consistently formatting chat messages
->
+
+DatCodec
+> A few useful codecs for serialising common values
+> 
+> Currently Implemented: UUID, Enums, ChunkPos
 
 DatMessageFormatter
 > A utility for formatting strings into chat Components using variable replacements and shorthands for formatting directives
