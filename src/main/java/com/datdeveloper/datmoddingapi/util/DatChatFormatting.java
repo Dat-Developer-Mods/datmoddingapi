@@ -2,7 +2,14 @@ package com.datdeveloper.datmoddingapi.util;
 
 import net.minecraft.ChatFormatting;
 
+/**
+ * A utility class containing standardised colours
+ */
 public class DatChatFormatting {
+    private DatChatFormatting() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /**
      * Colours for chat messages
      */

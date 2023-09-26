@@ -13,6 +13,10 @@ import org.jetbrains.annotations.Nullable;
  * A class to simplify sending notifications to the player
  */
 public class NotificationHelper {
+    private NotificationHelper() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /**
      * Display a notification for the given player in the middle of their screen
      * @param player The player to send the notification to
@@ -22,7 +26,7 @@ public class NotificationHelper {
      * @param stay The number of ticks for the message to spend on the screen
      * @param fadeOut The number of ticks to spend fading out
      */
-    public void titleNotification(@NotNull final ServerPlayer player,
+    public static void titleNotification(@NotNull final ServerPlayer player,
                                   @NotNull final Component title,
                                   @Nullable final Component subTitle,
                                   final int fadeIn,
@@ -43,7 +47,7 @@ public class NotificationHelper {
      * @param title The main title of the notification
      * @param subTitle The subtitle of the notification
      */
-    public void titleNotification(final ServerPlayer player,
+    public static void titleNotification(final ServerPlayer player,
                                   final Component title,
                                   @Nullable final Component subTitle) {
         titleNotification(player, title, subTitle, 10, 40, 10);
@@ -54,7 +58,7 @@ public class NotificationHelper {
      * @param player The player to send the notification to
      * @param message The content of the notification
      */
-    public void hotbarNotification(final ServerPlayer player,
+    public static void hotbarNotification(final ServerPlayer player,
                                    final Component message) {
         player.connection.send(new ClientboundSetActionBarTextPacket(message));
     }
@@ -67,7 +71,7 @@ public class NotificationHelper {
      * @param player The player to send the notification to
      * @param message The content of the notification
      */
-    public void chatNotification(final ServerPlayer player,
+    public static void chatNotification(final ServerPlayer player,
                                  final Component message) {
         player.sendSystemMessage(message);
     }

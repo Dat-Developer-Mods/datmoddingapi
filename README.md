@@ -32,6 +32,9 @@ DatPermissions
 > Supports forge and sponge permission APIs
 
 ## Utilities
+AgeUtil
+> A simple utility for converting a delta time into a friendly relative time message
+
 DatChatFormatting
 > A set of standardised chat colours for consistently formatting chat messages
 >
