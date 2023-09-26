@@ -221,7 +221,6 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
 
 // Modrinth Publishing
 modrinth {
-    debugMode=true
     token=System.getenv("MODRINTH_TOKEN")
     projectId=modrinth_id
     versionName="${mod_name} - ${version}"
