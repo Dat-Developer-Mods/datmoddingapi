@@ -3,8 +3,11 @@ package com.datdeveloper.datmoddingapi;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 
+/**
+ * The config for DatModdingAPI
+ */
+@SuppressWarnings("HideUtilityClassConstructor")
 public class DatConfig {
-
     private static ConfigValue<Integer> delayedEventsPerTick;
     private static ConfigValue<Integer> maxConcurrentThreadCount;
     DatConfig(final ForgeConfigSpec.Builder builder) {
@@ -19,6 +22,9 @@ public class DatConfig {
                 .comment("Too many threads can hog resources, and lots of threads only helps when there are many concurrent tasks")
                 .comment("You probably don't want to change this if you don't know it is")
                 .defineInRange("MaxAsyncThreadCount", 2, 1, Integer.MAX_VALUE);
+    }
+
+    private DatConfig() {
     }
 
     public static int getDelayedEventsPerTick() {

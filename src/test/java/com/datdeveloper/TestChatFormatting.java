@@ -2,8 +2,10 @@ package com.datdeveloper;
 
 import com.datdeveloper.datmoddingapi.util.DatChatFormatting;
 import com.datdeveloper.datmoddingapi.util.DatMessageFormatter;
+import com.datdeveloper.datmoddingapi.util.exceptions.ChatParseException;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -163,6 +165,7 @@ class TestChatFormatting {
     void testSequentialVariableInstructionTooMany() {
         final String chatString = "My replacement variable is <v><v><v><v>";
         final String[] replacements = {"Test", "test2", "test3"};
+        Assertions.assertThrows(ChatParseException.class, () -> new DatMessageFormatter(chatString, (Object[]) replacements).parse());
     }
 
     /**

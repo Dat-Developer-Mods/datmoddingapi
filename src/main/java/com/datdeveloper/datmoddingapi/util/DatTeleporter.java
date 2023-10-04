@@ -16,11 +16,12 @@ import java.util.function.Function;
  * Does not produce a portal and does not produce a sound
  */
 public class DatTeleporter implements ITeleporter {
-    /**
-     * The position to teleport the entity to
-     */
+    /** The position to teleport the entity to */
     final BlockPos destination;
 
+    /**
+     * @param destination The position to teleport the entity to
+     */
     public DatTeleporter(final BlockPos destination) {
         this.destination = destination;
     }

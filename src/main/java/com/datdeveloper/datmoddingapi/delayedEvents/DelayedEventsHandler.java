@@ -21,24 +21,28 @@ import java.util.Queue;
 @Mod.EventBusSubscriber(modid = Datmoddingapi.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class DelayedEventsHandler {
     // Singleton Stuff
-    private static final DelayedEventsHandler instance = new DelayedEventsHandler();
+    private static final DelayedEventsHandler INSTANCE = new DelayedEventsHandler();
 
     private final Queue<IDelayedEvent> eventQueue = new ArrayDeque<>();
 
     /**
      * Add a DelayedEvent to the Delay Queue
-     * @param event The event being added to the queue
      * @see IDelayedEvent
+     * @param event The event being added to the queue
      */
     public static void addEvent(final IDelayedEvent event) {
-        instance.eventQueue.add(event);
+        INSTANCE.eventQueue.add(event);
     }
 
+    /**
+     * A tick event to execute delayed events
+     * @param event The server tick event
+     */
     @SubscribeEvent
     public static void onTick(final TickEvent.ServerTickEvent event) {
-        for (int dummy = 0; dummy < DatConfig.getDelayedEventsPerTick() && !instance.eventQueue.isEmpty(); ++dummy) {
+        for (int dummy = 0; dummy < DatConfig.getDelayedEventsPerTick() && !INSTANCE.eventQueue.isEmpty(); ++dummy) {
             boolean executed = false;
-            final IDelayedEvent nextEvent = instance.eventQueue.remove();
+            final IDelayedEvent nextEvent = INSTANCE.eventQueue.remove();
 
             if (nextEvent.canExecute()) {
                 nextEvent.execute();
@@ -46,7 +50,7 @@ public class DelayedEventsHandler {
             }
 
             if (nextEvent.shouldRequeue(executed)) {
-                instance.eventQueue.add(nextEvent);
+                INSTANCE.eventQueue.add(nextEvent);
             }
         }
     }

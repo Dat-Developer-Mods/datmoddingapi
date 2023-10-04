@@ -21,33 +21,38 @@ import java.util.concurrent.*;
  */
 @Mod.EventBusSubscriber(modid = Datmoddingapi.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ConcurrentHandler {
-    private static final Logger logger = LogUtils.getLogger();
+    private static final Logger LOGGER = LogUtils.getLogger();
     private static final String NOT_READY_WARNING = "Something attempted to schedule a task before the ConcurrentHandler was ready, ignoring";
 
     // Threading stuff
     ScheduledThreadPoolExecutor service;
-    private static final Queue<Runnable> mainThreadQueue = new ConcurrentLinkedQueue<>();
+    private static final Queue<Runnable> MAIN_THREAD_QUEUE = new ConcurrentLinkedQueue<>();
 
     // Singleton
     boolean initialised = false;
-    private static final ConcurrentHandler instance = new ConcurrentHandler();
+    private static final ConcurrentHandler INSTANCE = new ConcurrentHandler();
 
     /**
      * Set up the Concurrent handler, expects the config to be loaded
      */
     public static void initialise() {
-        instance.service = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(Math.min(5, Math.max(DatConfig.getMaxConcurrentThreadCount() / 4, 1)));
-        instance.service.setKeepAliveTime(5, TimeUnit.MINUTES);
-        instance.service.setMaximumPoolSize(DatConfig.getMaxConcurrentThreadCount());
+        INSTANCE.service = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(Math.min(5, Math.max(DatConfig.getMaxConcurrentThreadCount() / 4, 1)));
+        INSTANCE.service.setKeepAliveTime(5, TimeUnit.MINUTES);
+        INSTANCE.service.setMaximumPoolSize(DatConfig.getMaxConcurrentThreadCount());
 
-        instance.initialised = true;
+        INSTANCE.initialised = true;
     }
 
+    /**
+     * A Server tick event used to handle any Runnables that have been passed from a Concurrent thread to be
+     * executed on the main thread
+     * @param event The tick event
+     */
     @SubscribeEvent
     public static void onTick(final TickEvent.ServerTickEvent event) {
         // Poll The mainThread queue and execute any tasks that have been queued
-        for (int dummy = 0; dummy < DatConfig.getDelayedEventsPerTick() && !mainThreadQueue.isEmpty(); ++dummy) {
-            mainThreadQueue.poll().run();
+        for (int dummy = 0; dummy < DatConfig.getDelayedEventsPerTick() && !MAIN_THREAD_QUEUE.isEmpty(); ++dummy) {
+            MAIN_THREAD_QUEUE.poll().run();
         }
     }
 
@@ -61,22 +66,22 @@ public class ConcurrentHandler {
      * @param task The task to run on the main thread
      */
     public static void runOnMainThread(final Runnable task) {
-        mainThreadQueue.add(task);
+        MAIN_THREAD_QUEUE.add(task);
     }
 
     /**
      * Queue a concurrent task with a return value
      * @param task The task to queue
-     * @return A Future representing the task
      * @param <T> The return type of the task
+     * @return A Future representing the task
      */
     public static <T> Future<T> callConcurrentTask(final Callable<T> task) {
-        if (!ConcurrentHandler.instance.initialised) {
-            logger.warn(NOT_READY_WARNING);
+        if (!ConcurrentHandler.INSTANCE.initialised) {
+            LOGGER.warn(NOT_READY_WARNING);
             return null;
         }
 
-        return ConcurrentHandler.instance.service.submit(task);
+        return ConcurrentHandler.INSTANCE.service.submit(task);
     }
 
     /**
@@ -84,12 +89,12 @@ public class ConcurrentHandler {
      * @param task The task to queue
      */
     public static void runConcurrentTask(final Runnable task) {
-        if (!ConcurrentHandler.instance.initialised) {
-            logger.warn(NOT_READY_WARNING);
+        if (!ConcurrentHandler.INSTANCE.initialised) {
+            LOGGER.warn(NOT_READY_WARNING);
             return;
         }
 
-        ConcurrentHandler.instance.service.submit(task);
+        ConcurrentHandler.INSTANCE.service.submit(task);
     }
 
     /**
@@ -97,16 +102,16 @@ public class ConcurrentHandler {
      * @param delay The delay before running the task
      * @param unit The units of the delay
      * @param task The task to queue
-     * @return A ScheduledFuture representing the task
      * @param <T> The return type of the task
+     * @return A ScheduledFuture representing the task
      */
     public static <T> ScheduledFuture<T> scheduleConcurrentTask(final long delay, final TimeUnit unit, final Callable<T> task) {
-        if (!ConcurrentHandler.instance.initialised) {
-            logger.warn(NOT_READY_WARNING);
+        if (!ConcurrentHandler.INSTANCE.initialised) {
+            LOGGER.warn(NOT_READY_WARNING);
             return null;
         }
 
-        return ConcurrentHandler.instance.service.schedule(task, delay, unit);
+        return ConcurrentHandler.INSTANCE.service.schedule(task, delay, unit);
     }
 
     /**
@@ -117,12 +122,12 @@ public class ConcurrentHandler {
      * @return A ScheduledFuture representing the task
      */
     public static ScheduledFuture<?> scheduleConcurrentTask(final long delay, final TimeUnit unit, final Runnable task) {
-        if (!ConcurrentHandler.instance.initialised) {
-            logger.warn(NOT_READY_WARNING);
+        if (!ConcurrentHandler.INSTANCE.initialised) {
+            LOGGER.warn(NOT_READY_WARNING);
             return null;
         }
 
-        return ConcurrentHandler.instance.service.schedule(task, delay, unit);
+        return ConcurrentHandler.INSTANCE.service.schedule(task, delay, unit);
     }
 
     /**
@@ -134,11 +139,11 @@ public class ConcurrentHandler {
      * @return A scheduledFuture representing the task (This is used to stop the event, do not lose it)
      */
     public static ScheduledFuture<?> scheduleFixedRateConcurrentTask(final long initialDelay, final long period, final TimeUnit unit, final Runnable task) {
-        if (!ConcurrentHandler.instance.initialised) {
-            logger.warn(NOT_READY_WARNING);
+        if (!ConcurrentHandler.INSTANCE.initialised) {
+            LOGGER.warn(NOT_READY_WARNING);
             return null;
         }
 
-        return ConcurrentHandler.instance.service.scheduleAtFixedRate(task, initialDelay, period, unit);
+        return ConcurrentHandler.INSTANCE.service.scheduleAtFixedRate(task, initialDelay, period, unit);
     }
 }

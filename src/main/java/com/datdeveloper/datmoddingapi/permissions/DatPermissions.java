@@ -12,6 +12,9 @@ import java.util.stream.Stream;
  * A utility class for checking permissions
  */
 public class DatPermissions {
+    private DatPermissions() {
+    }
+
     /**
      * Checks if the given CommandSource has the given permission
      * @param source The CommandSource being tested

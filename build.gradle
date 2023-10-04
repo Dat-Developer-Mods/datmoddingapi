@@ -9,6 +9,8 @@ plugins {
     id 'maven-publish'
     id "com.modrinth.minotaur" version "2.+"
     id 'net.darkhax.curseforgegradle' version '1.1.16'
+
+    id 'checkstyle'
 }
 
 group = mod_group_id
@@ -248,4 +250,12 @@ tasks.withType(GenerateModuleMetadata).configureEach {
 
 test {
     useJUnitPlatform()
+}
+
+checkstyle {
+    configFile = 'checkstyle.xml' as File
+}
+
+checkstyleTest {
+    enabled = false
 }

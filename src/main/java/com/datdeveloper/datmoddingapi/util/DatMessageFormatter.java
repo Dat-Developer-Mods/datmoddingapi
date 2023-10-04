@@ -7,6 +7,7 @@ import net.minecraft.network.chat.MutableComponent;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -98,11 +99,11 @@ public class DatMessageFormatter {
     /**
      * Format the given chat string into a chat component using objects passed as arguments
      * <br>
-     * A shortcut function for {@link DatMessageFormatter}
+     * A shortcut function for {@link DatMessageFormatter#DatMessageFormatter}
      * <br>
-     * When an error is encountered in the {@link DatMessageFormatter} Then it is caught and dumped in the chat message.
-     * {@link DatMessageFormatter} should be used directly if you desire handling the error yourself.
-     * @see DatMessageFormatter
+     * When an error is encountered in the {@link DatMessageFormatter#DatMessageFormatter} Then it is caught and dumped in the chat message.
+     * {@link DatMessageFormatter#DatMessageFormatter} should be used directly if you desire handling the error yourself.
+     * @see DatMessageFormatter#DatMessageFormatter
      * @param formatString The string that is processed
      * @param args The arguments to use to format the string
      * @return A chat component containing the formatted text
@@ -115,6 +116,10 @@ public class DatMessageFormatter {
         }
     }
 
+    /**
+     * @param formatString The string to be formatted
+     * @param args Arguments to be used to format the string
+     */
     public DatMessageFormatter(final String formatString, final Object... args) {
         this.formatString = formatString;
         this.args = args;
@@ -186,7 +191,7 @@ public class DatMessageFormatter {
      * @param instructionArgs    A list of formats to add to the message
      * @throws ChatParseException Thrown when no arguments are provided
      */
-    private void handleFormattingInstruction(final int instructionPointer, final List<String> instructionArgs) throws ChatParseException {
+    private void handleFormattingInstruction(final int instructionPointer, final Collection<String> instructionArgs) throws ChatParseException {
         if (instructionArgs.isEmpty()) {
             throw generateWrongNumberOfArgumentsException(instructionPointer, ">1", 0);
         }
@@ -260,7 +265,7 @@ public class DatMessageFormatter {
      * @param instructionArgs    An empty list
      * @throws ChatParseException Thrown when any arguments are provided
      */
-    private void handleResetInstruction(final int instructionPointer, final List<String> instructionArgs) throws ChatParseException {
+    private void handleResetInstruction(final int instructionPointer, final Collection<String> instructionArgs) throws ChatParseException {
         /* Reset style instruction
          * <r>
          * Equivalent to "<f reset>"
@@ -284,7 +289,7 @@ public class DatMessageFormatter {
      * @param instructionArgs    An empty list
      * @throws ChatParseException Thrown when any arguments are given
      */
-    private void handleGtInstruction(final int instructionPointer, final List<String> instructionArgs) throws ChatParseException {
+    private void handleGtInstruction(final int instructionPointer, final Collection<String> instructionArgs) throws ChatParseException {
         if (!instructionArgs.isEmpty()) {
             throw generateWrongNumberOfArgumentsException(instructionPointer, "0", instructionArgs.size());
         }

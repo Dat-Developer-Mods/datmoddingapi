@@ -19,7 +19,7 @@ public class AgeUtil {
         final long delta = Math.abs(deltaTime) / 1000;
 
         final String period;
-        if (delta < 60){
+        if (delta < 60) {
             period = "Second";
         } else if (delta < 3_600) {
             period = (delta / 60) + "Minute";

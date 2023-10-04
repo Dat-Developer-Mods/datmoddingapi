@@ -25,13 +25,16 @@ public class DatCodec {
         }
     }, UUID::toString);
 
+    private DatCodec() {
+    }
+
     /**
      * A helper function to create a Codec that handles the given enum class
      * <br>
      * The resulting codec will convert the enum into a string for storage
      * @param enumClass The class of the enum
-     * @return A Codec that handles the given enum class
      * @param <E> The Enum Type
+     * @return A Codec that handles the given enum class
      */
     public static <E extends Enum<E>> Codec<E> getEnumCodec(final Class<E> enumClass) {
         return Codec.STRING.comapFlatMap(string -> {

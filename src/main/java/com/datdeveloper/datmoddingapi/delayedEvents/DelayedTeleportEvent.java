@@ -36,8 +36,14 @@ public class DelayedTeleportEvent extends TimeDelayedEvent {
      */
     public BlockPos startingPos;
 
-    public DelayedTeleportEvent(final BlockPos destinationPos, final ResourceKey<Level> destinationWorld, final ServerPlayer player, final int Delay) {
-        super(Delay);
+    /**
+     * @param destinationPos   The position the player will teleport to
+     * @param destinationWorld The level the player will teleport to
+     * @param player           The player being teleported
+     * @param delay            The delay in seconds before the player teleports
+     */
+    public DelayedTeleportEvent(final BlockPos destinationPos, final ResourceKey<Level> destinationWorld, final ServerPlayer player, final int delay) {
+        super(delay);
         this.destinationPos = destinationPos;
         this.destinationWorld = destinationWorld;
         this.player = player;

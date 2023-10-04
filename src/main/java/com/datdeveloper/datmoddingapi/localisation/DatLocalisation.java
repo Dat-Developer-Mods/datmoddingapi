@@ -103,7 +103,7 @@ public class DatLocalisation {
 
         final JsonObject json = gson.fromJson(new InputStreamReader(localisationsFile, StandardCharsets.UTF_8), JsonObject.class);
 
-        for(final Map.Entry<String, JsonElement> entry : json.entrySet()) {
+        for (final Map.Entry<String, JsonElement> entry : json.entrySet()) {
             addLocalisation(entry.getKey(), GsonHelper.convertToString(entry.getValue(), null));
         }
     }

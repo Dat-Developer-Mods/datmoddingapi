@@ -9,9 +9,12 @@ public abstract class TimeDelayedEvent implements IDelayedEvent {
      */
     protected long exeTime;
 
-    protected TimeDelayedEvent(final int Delay){
+    /**
+     * @param delay The amount of time in seconds before the delayed event will execute
+     */
+    protected TimeDelayedEvent(final int delay) {
         // Calculate the time after which we can execute, so we don't calculate it every time we check it
-        exeTime = System.currentTimeMillis() + (Delay * 1000L);
+        exeTime = System.currentTimeMillis() + (delay * 1000L);
     }
 
     @Override
