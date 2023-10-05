@@ -1,10 +1,12 @@
 package com.datdeveloper.datmoddingapi.localisation;
 
+import com.datdeveloper.datmoddingapi.util.DatMessageFormatter;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.mojang.logging.LogUtils;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.GsonHelper;
 import org.slf4j.Logger;
 
@@ -131,6 +133,19 @@ public class DatLocalisation {
      */
     public String getLocalisation(final String key) {
         return translations.get(key);
+    }
+
+    /**
+     * Get a localisation as a component
+     * <br>
+     * The component will be formatted using {@linkplain com.datdeveloper.datmoddingapi.util.DatChatFormatting DatChatFormatting}
+     * @see com.datdeveloper.datmoddingapi.util.DatChatFormatting
+     * @param key The key of the localised message
+     * @param args Arguments used for formatting the component
+     * @return A formatted chat component
+     */
+    public Component getComponent(final String key, final Object... args) {
+        return DatMessageFormatter.formatChatString(getLocalisation(key), args);
     }
 
     public Map<String, String> getAllTranslations() {
