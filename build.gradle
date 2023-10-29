@@ -14,7 +14,7 @@ plugins {
 }
 
 group = mod_group_id
-version = "${minecraft_version}-${mod_version}"
+version = "${minecraft_version}-${mod_version}${release_postfix}"
 
 base {
     archivesName = mod_id
@@ -196,7 +196,14 @@ publishing {
     repositories {
         maven {
             name = "Dat-Maven-Repo"
-            url = "https://maven.datdeveloper.com/releases"
+
+            if (project.version.endsWith('-SNAPSHOT')) {
+                url = "https://maven.datdeveloper.com/snapshots"
+            } else {
+                url = "https://maven.datdeveloper.com/releases"
+            }
+
+
             credentials {
                 username = System.getenv("MAVENREPOUSER")
                 password = System.getenv("MAVENREPOPASS")
