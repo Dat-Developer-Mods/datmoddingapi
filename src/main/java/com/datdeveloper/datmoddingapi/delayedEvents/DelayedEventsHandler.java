@@ -1,24 +1,29 @@
 package com.datdeveloper.datmoddingapi.delayedEvents;
 
+
 import com.datdeveloper.datmoddingapi.DatConfig;
 import com.datdeveloper.datmoddingapi.Datmoddingapi;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
 
 /**
  * A system for delaying the execution of events until a condition is met
- * <p>DelayedEvents <b>do not</b> execute in a different thread, rather they on the main server tick after their {@link IDelayedEvent#canExecute()} function tests true.</p>
- * <p>For executing tasks on another thread, see {@link com.datdeveloper.datmoddingapi.concurrentTask.ConcurrentHandler}.</p>
- * <p>For an example of a delayed event, see {@link DelayedTeleportEvent}</p>
+ * <p>
+ * DelayedEvents <b>do not</b> execute in a different thread, rather they on the main server tick after their
+ * {@link IDelayedEvent#canExecute()} function tests true.
+ * <p>
+ * For executing tasks on another thread, see {@link com.datdeveloper.datmoddingapi.concurrentTask.ConcurrentHandler}.
+ * <p>
+ * For an example of a delayed event, see {@link DelayedTeleportEvent}
  *
  * @see IDelayedEvent
  * @see TimeDelayedEvent
  */
-@Mod.EventBusSubscriber(modid = Datmoddingapi.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber(modid = Datmoddingapi.MODID)
 public class DelayedEventsHandler {
     // Singleton Stuff
     private static final DelayedEventsHandler INSTANCE = new DelayedEventsHandler();
@@ -39,7 +44,7 @@ public class DelayedEventsHandler {
      * @param event The server tick event
      */
     @SubscribeEvent
-    public static void onTick(final TickEvent.ServerTickEvent event) {
+    public static void onTick(final ServerTickEvent.Post event) {
         for (int dummy = 0; dummy < DatConfig.getDelayedEventsPerTick() && !INSTANCE.eventQueue.isEmpty(); ++dummy) {
             boolean executed = false;
             final IDelayedEvent nextEvent = INSTANCE.eventQueue.remove();

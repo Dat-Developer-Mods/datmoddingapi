@@ -1,13 +1,15 @@
 package com.datdeveloper.datmoddingapi.delayedEvents;
 
 import com.datdeveloper.datmoddingapi.util.DatChatFormatting;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+
+import java.util.Set;
 
 /**
  * A Delayed Event to teleport the player to a specific location after a set amount of time
@@ -18,23 +20,23 @@ public class DelayedTeleportEvent extends TimeDelayedEvent {
     /**
      * The position the player will teleport to
      */
-    public BlockPos destinationPos;
+    protected BlockPos destinationPos;
 
     /**
      * The level the player will teleport to
      */
-    public ResourceKey<Level> destinationWorld;
+    protected ResourceKey<Level> destinationWorld;
 
     /**
      * The Player being teleported
      */
-    public ServerPlayer player;
+    protected ServerPlayer player;
 
     /**
      * The starting position of the player
      * Used to calculate if the event should cancel for the player moving
      */
-    public BlockPos startingPos;
+    protected BlockPos startingPos;
 
     /**
      * @param destinationPos   The position the player will teleport to
@@ -42,7 +44,10 @@ public class DelayedTeleportEvent extends TimeDelayedEvent {
      * @param player           The player being teleported
      * @param delay            The delay in seconds before the player teleports
      */
-    public DelayedTeleportEvent(final BlockPos destinationPos, final ResourceKey<Level> destinationWorld, final ServerPlayer player, final int delay) {
+    public DelayedTeleportEvent(final BlockPos destinationPos,
+                                final ResourceKey<Level> destinationWorld,
+                                final ServerPlayer player,
+                                final int delay) {
         super(delay);
         this.destinationPos = destinationPos;
         this.destinationWorld = destinationWorld;
@@ -53,14 +58,26 @@ public class DelayedTeleportEvent extends TimeDelayedEvent {
 
     @Override
     public void execute() {
-        @SuppressWarnings("ConstantConditions")
+        //noinspection DataFlowIssue
         final ServerLevel level = player.getServer().getLevel(destinationWorld);
         if (level == null) {
-            player.sendSystemMessage(Component.literal(ChatFormatting.RED + "Failed to find level"));
+            player.sendSystemMessage(Component.literal("Failed to find level")
+                                              .withStyle(DatChatFormatting.TextColour.ERROR));
             return;
         }
 
-        player.teleportTo(level, (double) destinationPos.getX() + 0.5f, (double) destinationPos.getY() + 0.5f, (double) destinationPos.getZ() + 0.5f, player.getXRot(), player.getYRot());
+        final Vec3 centre = destinationPos.getCenter();
+
+        player.teleportTo(
+                level,
+                centre.x,
+                centre.y,
+                centre.z,
+                Set.of(),
+                player.getXRot(),
+                player.getYRot(),
+                false
+        );
     }
 
     @Override

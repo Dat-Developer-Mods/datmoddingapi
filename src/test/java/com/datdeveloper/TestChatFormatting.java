@@ -5,7 +5,6 @@ import com.datdeveloper.datmoddingapi.util.DatMessageFormatter;
 import com.datdeveloper.datmoddingapi.util.exceptions.ChatParseException;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

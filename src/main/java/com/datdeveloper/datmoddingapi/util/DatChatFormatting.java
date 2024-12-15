@@ -25,6 +25,9 @@ public class DatChatFormatting {
 
         /** Content is the header of a group of text */
         public static final ChatFormatting HEADER = ChatFormatting.DARK_AQUA;
+
+        private TextColour() {
+        }
     }
 
     /**
@@ -39,6 +42,9 @@ public class DatChatFormatting {
 
         /** The player is online but not currently active */
         public static final ChatFormatting AWAY = ChatFormatting.GOLD;
+
+        private PlayerColour() {
+        }
     }
 }
 

@@ -2,43 +2,41 @@ package com.datdeveloper.datmoddingapi;
 
 import com.datdeveloper.datmoddingapi.concurrentTask.ConcurrentHandler;
 import com.mojang.logging.LogUtils;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import org.slf4j.Logger;
 
+/**
+ * The entry point for the mod
+ */
 @Mod(Datmoddingapi.MODID)
 public class Datmoddingapi {
 
-    /**
-     * The ID of the mod
-     */
-    // Define mod id in a common place for everything to reference
+    /** The ID of the mod */
     public static final String MODID = "datmoddingapi";
-    // Directly reference a slf4j logger
+
+    /** Logger for the mod */
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    @SuppressWarnings({"MissingJavadocMethod", "MissingJavadoc"})
-    public Datmoddingapi() {
-        final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    /**
+     * Entrypoint for mod
+     * @param modEventBus The event bus for the mod
+     * @param container Container that wraps this mod
+     */
+    public Datmoddingapi(final IEventBus modEventBus, final ModContainer container) {
+        container.registerConfig(ModConfig.Type.COMMON, DatConfig.SPEC);
 
-        // Register the commonSetup method for modloading
+        // Register the commonSetup method for mod loading
         modEventBus.addListener(this::commonSetup);
 
-        // Register ourselves for server and other game events we are interested in
-        MinecraftForge.EVENT_BUS.register(this);
-
-        final ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
-        @SuppressWarnings("UnusedLocalVariable")
-        final DatConfig config = new DatConfig(builder);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, builder.build());
     }
 
+    /**
+     * Client and server side setup for the mod
+     */
     private void commonSetup(final FMLCommonSetupEvent event) {
         ConcurrentHandler.initialise();
     }

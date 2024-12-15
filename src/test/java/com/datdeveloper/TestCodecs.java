@@ -11,50 +11,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
-import java.util.UUID;
 
+/**
+ * Tests to ensure functionality of CODECs
+ */
 public class TestCodecs {
-    /**
-     * Test UUID Correctly converts to Json
-     */
-    @Test
-    void testUuidToJson() {
-        final UUID uuid = UUID.randomUUID();
-
-        final Optional<JsonElement> result = DatCodec.UUID_CODEC.encodeStart(JsonOps.INSTANCE, uuid).result();
-
-        Assertions.assertTrue(result.isPresent());
-        Assertions.assertEquals(uuid.toString(), result.get().getAsString());
-    }
-
-    /**
-     * Test Json correctly converts into UUID
-     */
-    @Test
-    void testJsonToUuid() {
-        final UUID uuid = UUID.randomUUID();
-
-        final Gson gson = new Gson();
-        final JsonElement object = gson.toJsonTree(uuid.toString());
-
-        final Optional<UUID> result = DatCodec.UUID_CODEC.parse(JsonOps.INSTANCE, object).result();
-
-        Assertions.assertTrue(result.isPresent());
-        Assertions.assertEquals(uuid, result.get());
-    }
-
-    /**
-     * Test Json to UUID correctly handles bad UUID
-     */
-    @Test
-    void testBadJsonToUuid() {
-        final Gson gson = new Gson();
-        final JsonElement object = gson.toJsonTree("Totally not a real UUID");
-
-        final Optional<UUID> result = DatCodec.UUID_CODEC.parse(JsonOps.INSTANCE, object).result();
-
-        Assertions.assertFalse(result.isPresent());
-    }
 
     /**
      * Test enum correctly converts to json
@@ -63,7 +24,9 @@ public class TestCodecs {
     void testEnumToJson() {
         final ENotificationType test = ENotificationType.ACTIONBAR;
 
-        final Optional<JsonElement> result = DatCodec.getEnumCodec(ENotificationType.class).encodeStart(JsonOps.INSTANCE, test).result();
+        final Optional<JsonElement> result = DatCodec.getEnumCodec(ENotificationType.class)
+                                                     .encodeStart(JsonOps.INSTANCE, test)
+                                                     .result();
 
         Assertions.assertTrue(result.isPresent());
         Assertions.assertEquals(test.name(), result.get().getAsString());
@@ -79,7 +42,9 @@ public class TestCodecs {
         final Gson gson = new Gson();
         final JsonElement object = gson.toJsonTree(test.name());
 
-        final Optional<ENotificationType> result = DatCodec.getEnumCodec(ENotificationType.class).parse(JsonOps.INSTANCE, object).result();
+        final Optional<ENotificationType> result = DatCodec.getEnumCodec(ENotificationType.class)
+                                                           .parse(JsonOps.INSTANCE, object)
+                                                           .result();
 
         Assertions.assertTrue(result.isPresent());
         Assertions.assertEquals(test, result.get());
@@ -93,7 +58,9 @@ public class TestCodecs {
         final Gson gson = new Gson();
         final JsonElement object = gson.toJsonTree("Totally not a real ENotificationType");
 
-        final Optional<ENotificationType> result = DatCodec.getEnumCodec(ENotificationType.class).parse(JsonOps.INSTANCE, object).result();
+        final Optional<ENotificationType> result = DatCodec.getEnumCodec(ENotificationType.class)
+                                                           .parse(JsonOps.INSTANCE, object)
+                                                           .result();
 
         Assertions.assertFalse(result.isPresent());
     }
@@ -119,7 +86,7 @@ public class TestCodecs {
 
         final ChunkPos chunkPos = new ChunkPos(5, 12);
         final Gson gson = new Gson();
-        final JsonElement object = gson.fromJson("[" + chunkPos.x + "," + chunkPos.z + "]", JsonArray.class);
+        final JsonElement object = gson.fromJson("[%d,%d]".formatted(chunkPos.x, chunkPos.z), JsonArray.class);
 
         final Optional<ChunkPos> result = DatCodec.CHUNKPOS.parse(JsonOps.INSTANCE, object).result();
 

@@ -98,11 +98,15 @@ public class DatMessageFormatter {
 
     /**
      * Format the given chat string into a chat component using objects passed as arguments
-     * <br>
+     * <p>
      * A shortcut function for {@link DatMessageFormatter#DatMessageFormatter}
-     * <br>
-     * When an error is encountered in the {@link DatMessageFormatter#DatMessageFormatter} Then it is caught and dumped in the chat message.
-     * {@link DatMessageFormatter#DatMessageFormatter} should be used directly if you desire handling the error yourself.
+     * <p>
+     * When an error is encountered in the {@link DatMessageFormatter#DatMessageFormatter}, it is caught and dumped in
+     * the chat message.
+     * <p>
+     * {@link DatMessageFormatter#DatMessageFormatter} should be used directly if you desire handling the error
+     * yourself.
+     *
      * @see DatMessageFormatter#DatMessageFormatter
      * @param formatString The string that is processed
      * @param args The arguments to use to format the string
@@ -127,6 +131,7 @@ public class DatMessageFormatter {
 
     /**
      * Parse the given formatString using the arguments
+     *
      * @return The processed message
      * @throws ChatParseException Thrown when an exception is encountered whilst parsing the string
      */
@@ -148,7 +153,7 @@ public class DatMessageFormatter {
     }
 
     /**
-     * Handle an instruction that specifies a special behaviour in the output
+     * Handle an instruction that specifies a special behaviour in the output.
      */
     private void handleInstruction() throws ChatParseException {
         // Hold instruction pointer in case of error
@@ -174,7 +179,11 @@ public class DatMessageFormatter {
             case '>' -> {
                 // Discard empty instruction
             }
-            default -> throw new ChatParseException("Unknown instruction character: " + instruction, formatString, instructionPointer);
+            default -> throw new ChatParseException(
+                    "Unknown instruction character: " + instruction,
+                    formatString,
+                    instructionPointer
+            );
         }
     }
 
@@ -191,7 +200,8 @@ public class DatMessageFormatter {
      * @param instructionArgs    A list of formats to add to the message
      * @throws ChatParseException Thrown when no arguments are provided
      */
-    private void handleFormattingInstruction(final int instructionPointer, final Collection<String> instructionArgs) throws ChatParseException {
+    private void handleFormattingInstruction(final int instructionPointer, final Collection<String> instructionArgs)
+            throws ChatParseException {
         if (instructionArgs.isEmpty()) {
             throw generateWrongNumberOfArgumentsException(instructionPointer, ">1", 0);
         }
@@ -208,19 +218,24 @@ public class DatMessageFormatter {
 
     /**
      * An instruction to insert a passed variable into the message
-     * <br>
+     * <p>
      * The instruction can take one of two forms:
-     * <br>
-     * &lt;v index&gt;, where "index" is the index of the argument in the list of arguments provided to the formatter.
-     * The space is optional
-     * <br>
-     * &lt;v&gt;, where each usage counts to a running total, of which is used as the index
+     * <ul>
+     *     <li>
+     *         &lt;v index&gt;, where "index" is the index of the argument in the list of arguments provided to the
+     *         formatter. The space is optional
+     *      </li>
+     *      <li>&lt;v&gt;, where each usage counts to a running total, of which is used as the index</li>
+     * </ul>
      *
      * @param instructionPointer The index of the opening < of the instruction
-     * @param instructionArgs    An empty list, or a single integer that defines the index of the argument array to insert
-     * @throws ChatParseException Thrown when there are too many arguments, or if the requested variable cannot be accessed
+     * @param instructionArgs    An empty list, or a single integer that defines the index of the argument array to
+     *                           insert
+     * @throws ChatParseException Thrown when there are too many arguments, or if the requested variable cannot be
+     *                            accessed
      */
-    private void handleVariableInstruction(final int instructionPointer, final List<String> instructionArgs) throws ChatParseException {
+    private void handleVariableInstruction(final int instructionPointer, final List<String> instructionArgs)
+            throws ChatParseException {
         final Object arg;
 
         // Get the argument
@@ -233,11 +248,19 @@ public class DatMessageFormatter {
             }
         } else if (instructionArgs.size() == 1) {
             try {
-                arg = args[Integer.parseInt(instructionArgs.get(0))];
+                arg = args[Integer.parseInt(instructionArgs.getFirst())];
             } catch (final IndexOutOfBoundsException e) {
-                throw new ChatParseException("Requested variable that wasn't in the args array", formatString, instructionPointer);
+                throw new ChatParseException(
+                        "Requested variable that wasn't in the args array",
+                        formatString,
+                        instructionPointer
+                );
             } catch (final NumberFormatException e) {
-                throw new ChatParseException("Bad argument index: " + instructionArgs.get(0), formatString, instructionPointer);
+                throw new ChatParseException(
+                        "Bad argument index: " + instructionArgs.getFirst(),
+                        formatString,
+                        instructionPointer
+                );
             }
         } else {
             throw generateWrongNumberOfArgumentsException(instructionPointer, "0 or 1", instructionArgs.size());
@@ -265,7 +288,8 @@ public class DatMessageFormatter {
      * @param instructionArgs    An empty list
      * @throws ChatParseException Thrown when any arguments are provided
      */
-    private void handleResetInstruction(final int instructionPointer, final Collection<String> instructionArgs) throws ChatParseException {
+    private void handleResetInstruction(final int instructionPointer, final Collection<String> instructionArgs)
+            throws ChatParseException {
         /* Reset style instruction
          * <r>
          * Equivalent to "<f reset>"
@@ -289,7 +313,8 @@ public class DatMessageFormatter {
      * @param instructionArgs    An empty list
      * @throws ChatParseException Thrown when any arguments are given
      */
-    private void handleGtInstruction(final int instructionPointer, final Collection<String> instructionArgs) throws ChatParseException {
+    private void handleGtInstruction(final int instructionPointer, final Collection<String> instructionArgs)
+            throws ChatParseException {
         if (!instructionArgs.isEmpty()) {
             throw generateWrongNumberOfArgumentsException(instructionPointer, "0", instructionArgs.size());
         }

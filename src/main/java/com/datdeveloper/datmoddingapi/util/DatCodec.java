@@ -16,7 +16,10 @@ public class DatCodec {
      * A Codec for handling UUID
      * <br>
      * Converts it into a string for storage
+     *
+     * @deprecated Use {@link net.minecraft.core.UUIDUtil#CODEC} instead
      */
+    @Deprecated(since = "1.9.0")
     public static final Codec<UUID> UUID_CODEC = Codec.STRING.comapFlatMap(s -> {
         try {
             return DataResult.success(UUID.fromString(s));

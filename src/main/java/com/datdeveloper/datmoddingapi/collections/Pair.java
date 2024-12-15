@@ -4,7 +4,9 @@ package com.datdeveloper.datmoddingapi.collections;
  * A simple container for 2 values
  * @param <L> the type of the left hand
  * @param <R> the type of the right hand
+ * @deprecated Use {@link org.apache.commons.lang3.tuple.Pair} instead
  */
+@Deprecated(since = "1.9.0")
 public class Pair<L, R> {
     private L leftHand;
     private R rightHand;
