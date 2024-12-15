@@ -82,7 +82,7 @@ jobs:
           MODRINTH_TOKEN: ${{secrets.MODRINTH_TOKEN}}
           CURSEFORGE_TOKEN: ${{secrets.CURSEFORGE_TOKEN}}
           CHANGELOG: ${{steps.releaseInfo.outputs.body}}
-        run: gradle publish
+        run: gradle publish --no-configuration-cache
         shell: bash
       - name: Upload jar to release
         uses: softprops/action-gh-release@v1
