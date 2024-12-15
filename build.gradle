@@ -265,7 +265,7 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
     mainFile.displayName="${mod_name} - ${version}"
     mainFile.addModLoader("NeoForge")
     mainFile.addGameVersion(minecraft_version)
-    mainFile.addJavaVersion("Java 17")
+    mainFile.addJavaVersion("Java 21")
 }
 
 // Modrinth Publishing
@@ -273,8 +273,10 @@ modrinth {
     token=System.getenv("MODRINTH_TOKEN")
     projectId=modrinth_id
     versionName="${mod_name} - ${version}"
+    versionType="release"
     uploadFile=jar
     gameVersions=[minecraft_version]
+    loaders=["neoforge"]
     changelog=System.getenv("CHANGELOG")
 }
 
